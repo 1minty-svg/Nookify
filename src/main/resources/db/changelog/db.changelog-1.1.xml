@@ -1,0 +1,224 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="fill-furniture-models" author="minty">
+        <insert tableName="furniture_models">
+            <column name="name" value="Bed_01"/>
+            <column name="category" value="BEDROOM"/>
+            <column name="model_path" value="Bed_01.glb"/>
+            <column name="width" value="2.77"/>
+            <column name="height" value="0.93"/>
+            <column name="depth" value="3.25"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Bedroom_Wardrobe_01"/>
+            <column name="category" value="BEDROOM"/>
+            <column name="model_path" value="Bedroom_Wardrobe_01.glb"/>
+            <column name="width" value="3.0"/>
+            <column name="height" value="2.52"/>
+            <column name="depth" value="1.05"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Bedroom_Wardrobe_03"/>
+            <column name="category" value="BEDROOM"/>
+            <column name="model_path" value="Bedroom_Wardrobe_03.glb"/>
+            <column name="width" value="1.51"/>
+            <column name="height" value="2.52"/>
+            <column name="depth" value="1.06"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Chair_01"/>
+            <column name="category" value="LIVING_ROOM"/>
+            <column name="model_path" value="Chair_01.glb"/>
+            <column name="width" value="0.62"/>
+            <column name="height" value="1.23"/>
+            <column name="depth" value="0.8"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Fridge_01"/>
+            <column name="category" value="KITCHEN"/>
+            <column name="model_path" value="Fridge_01.glb"/>
+            <column name="width" value="1.0"/>
+            <column name="height" value="2.26"/>
+            <column name="depth" value="1.03"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Drawer_01"/>
+            <column name="category" value="KITCHEN"/>
+            <column name="model_path" value="Kitchen_Drawer_01.glb"/>
+            <column name="width" value="1.5"/>
+            <column name="height" value="1.12"/>
+            <column name="depth" value="1.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Drawer_02"/>
+            <column name="category" value="KITCHEN"/>
+            <column name="model_path" value="Kitchen_Drawer_02.glb"/>
+            <column name="width" value="1.5"/>
+            <column name="height" value="1.12"/>
+            <column name="depth" value="1.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Drawer_02_B"/>
+            <column name="category" value="KITCHEN"/>
+            <column name="model_path" value="Kitchen_Drawer_02_B.glb"/>
+            <column name="width" value="1.5"/>
+            <column name="height" value="1.5"/>
+            <column name="depth" value="1.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Drawer_04"/>
+            <column name="category" value="KITCHEN"/>
+            <column name="model_path" value="Kitchen_Drawer_04.glb"/>
+            <column name="width" value="1.5"/>
+            <column name="height" value="0.94"/>
+            <column name="depth" value="0.56"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Drawer_05"/>
+            <column name="category" value="KITCHEN"/>
+            <column name="model_path" value="Kitchen_Drawer_05.glb"/>
+            <column name="width" value="0.75"/>
+            <column name="height" value="1.12"/>
+            <column name="depth" value="1.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Drawer_06"/>
+            <column name="category" value="KITCHEN"/>
+            <column name="model_path" value="Kitchen_Drawer_06.glb"/>
+            <column name="width" value="0.75"/>
+            <column name="height" value="1.74"/>
+            <column name="depth" value="1.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Drawer_07"/>
+            <column name="category" value="KITCHEN"/>
+            <column name="model_path" value="Kitchen_Drawer_07.glb"/>
+            <column name="width" value="1.0"/>
+            <column name="height" value="1.12"/>
+            <column name="depth" value="1.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Shower_01"/>
+            <column name="category" value="BATHROOM"/>
+            <column name="model_path" value="Shower_01.glb"/>
+            <column name="width" value="2.0"/>
+            <column name="height" value="3.39"/>
+            <column name="depth" value="2.52"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Sink_01"/>
+            <column name="category" value="BATHROOM"/>
+            <column name="model_path" value="Sink_01.glb"/>
+            <column name="width" value="1.03"/>
+            <column name="height" value="1.62"/>
+            <column name="depth" value="0.94"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="SM_Bld_Floor_Carpet_01"/>
+            <column name="category" value="STRUCTURE"/>
+            <column name="model_path" value="SM_Bld_Floor_Carpet_01.glb"/>
+            <column name="width" value="2.5"/>
+            <column name="height" value="0.0"/>
+            <column name="depth" value="2.5"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="SM_Prop_Couch_02"/>
+            <column name="category" value="LIVING_ROOM"/>
+            <column name="model_path" value="SM_Prop_Couch_02.glb"/>
+            <column name="width" value="1.94"/>
+            <column name="height" value="0.94"/>
+            <column name="depth" value="0.92"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="SM_Prop_Fridge_02"/>
+            <column name="category" value="KITCHEN"/>
+            <column name="model_path" value="SM_Prop_Fridge_02.glb"/>
+            <column name="width" value="0.93"/>
+            <column name="height" value="2.15"/>
+            <column name="depth" value="0.85"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Table_01"/>
+            <column name="category" value="KITCHEN"/>
+            <column name="model_path" value="Table_01.glb"/>
+            <column name="width" value="3.0"/>
+            <column name="height" value="1.05"/>
+            <column name="depth" value="2.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Toilet_01"/>
+            <column name="category" value="BATHROOM"/>
+            <column name="model_path" value="Toilet_01.glb"/>
+            <column name="width" value="0.63"/>
+            <column name="height" value="1.45"/>
+            <column name="depth" value="1.23"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Wall_Ext_Door_01"/>
+            <column name="category" value="STRUCTURE"/>
+            <column name="model_path" value="Wall_Ext_Door_01.glb"/>
+            <column name="width" value="6.0"/>
+            <column name="height" value="4.0"/>
+            <column name="depth" value="0.63"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Wall_Ext_Simple_01"/>
+            <column name="category" value="STRUCTURE"/>
+            <column name="model_path" value="Wall_Ext_Simple_01.glb"/>
+            <column name="width" value="6.0"/>
+            <column name="height" value="4.0"/>
+            <column name="depth" value="0.5"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Wall_Ext_Window_03"/>
+            <column name="category" value="STRUCTURE"/>
+            <column name="model_path" value="Wall_Ext_Window_03.glb"/>
+            <column name="width" value="6.0"/>
+            <column name="height" value="4.0"/>
+            <column name="depth" value="0.68"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Wall_Int_Door_01"/>
+            <column name="category" value="STRUCTURE"/>
+            <column name="model_path" value="Wall_Int_Door_01.glb"/>
+            <column name="width" value="6.0"/>
+            <column name="height" value="4.0"/>
+            <column name="depth" value="0.63"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Wall_Int_Simple_01"/>
+            <column name="category" value="STRUCTURE"/>
+            <column name="model_path" value="Wall_Int_Simple_01.glb"/>
+            <column name="width" value="6.0"/>
+            <column name="height" value="4.0"/>
+            <column name="depth" value="0.5"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

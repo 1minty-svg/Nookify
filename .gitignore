@@ -1,0 +1,9 @@
+# Секретики
+src/main/resources/application.properties
+
+
+.gradle/
+.idea/
+build/
+out/
+

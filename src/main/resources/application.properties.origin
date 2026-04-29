@@ -1,0 +1,29 @@
+# DB
+spring.datasource.url=jdbc:postgresql://localhost:5432/nookify_db
+spring.datasource.username=YOUR_DB_USER
+spring.datasource.password=YOUR_DB_PASSWORD
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# JPA / Hibernate
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.show-sql=true
+
+# Liquibase
+spring.liquibase.change-log=classpath:db/changelog/db.changelog-master.xml
+
+# MinIO
+minio.url=http://localhost:9000
+minio.accessKey=YOUR_MINIO_KEY
+minio.secretKey=YOUR_MINIO_SECRET
+minio.bucketName=furniture
+
+# Spring AI Gemini
+gemini.api.key=YOUR_GEMINI_KEY
+spring.ai.google.ai.chat.options.model=gemini-pro
+
+# Proxy Settings
+proxy.host=YOUR_PROXY_HOST
+proxy.port=YOUR_PROXY_PORT
+proxy.user=YOUR_PROXY_USER
+proxy.pass=YOUR_PROXY_PASS

@@ -811,36 +811,6 @@ header {
 }
 
 /* === DECORATIVE SHAPES === */
-.bg-shapes {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.bg-shape {
-    position: absolute;
-    user-select: none;
-    pointer-events: none;
-}
-
-.shape-1 {
-    top: 0%;
-    left: 7.5%;
-    width: 40%;
-    opacity: 0.8;
-}
-
-.shape-2 {
-    top: 42%;
-    right: -6%;
-    width: 45%;
-    opacity: 0.9;
-}
 
 .explore-section {
     position: relative;
@@ -848,9 +818,8 @@ header {
 }
 
 .blob-explore {
-    transform: rotate(-12deg);
     position: absolute;
-    top: -85px;
+    top: -500px;
     right: -160px;
     width: 840px;
     height: auto;
@@ -904,7 +873,7 @@ header {
 }
 
 .footer-logo-img {
-    height: 32px;
+    height: 62px;
     width: auto;
     filter: brightness(0) invert(1);
     opacity: 0.9;

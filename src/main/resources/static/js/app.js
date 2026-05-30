@@ -1,16 +1,12 @@
 // ========================================
-// NOOKIFY APP - FULLY WORKING
+// NOOKIFY APP - WITH GLTF SUPPORT
 // ========================================
-// В САМОМ ВЕРХУ app.js, перед всеми классами
-
 
 const CONFIG = {
-    // Если бэкенд запущен на 8080, а фронт на 63342 - нужен полный URL
     modelsBaseUrl: 'http://localhost:8080/api/models',
     useBackend: true,
     timeout: 10000
 };
-
 
 let currentExportSettings = {
     geometry: 'Low Poly',
@@ -20,11 +16,8 @@ let currentExportSettings = {
 };
 
 let currentSceneModels = [];
-
-// Хранилище данных сцен
 let savedScenes = new Map();
 
-// Загрузка сохранённых сцен из localStorage
 function loadSavedScenes() {
     const saved = localStorage.getItem('nookify_saved_scenes');
     if (saved) {
@@ -36,7 +29,6 @@ function loadSavedScenes() {
     }
 }
 
-// Сохранение сцены в localStorage
 function saveSceneToStorage(cardIndex, sceneData) {
     savedScenes.set(cardIndex, sceneData);
     localStorage.setItem('nookify_saved_scenes', JSON.stringify([...savedScenes]));
@@ -136,10 +128,10 @@ class ModelDatabase {
 
     _getMockModels() {
         return [
-            new Model3D({ id: 'sofa_scand_01', name: 'Scandinavian Sofa', category: 'seating', tags: ['sofa', 'scandinavian', 'grey', 'modern'], dimensions: { width: 2.4, height: 0.8, depth: 1.2 }, modelPath: 'SM_Prop_Couch_02.glb', polyCount: 15420 }),
-            new Model3D({ id: 'table_wood_02', name: 'Wooden Coffee Table', category: 'surface', tags: ['table', 'wood', 'natural', 'round'], dimensions: { width: 1.0, height: 0.45, depth: 1.0 }, modelPath: 'Table_01.glb', polyCount: 8200 }),
-            new Model3D({ id: 'lamp_arc_03', name: 'Arc Floor Lamp', category: 'lighting', tags: ['lamp', 'modern', 'brass', 'light'], dimensions: { width: 0.3, height: 1.8, depth: 0.3 }, modelPath: 'Fridge_01.glb', polyCount: 4500 }),
-            new Model3D({ id: 'chair_eames_04', name: 'Eames Lounge Chair', category: 'seating', tags: ['chair', 'leather', 'classic', 'brown'], dimensions: { width: 0.84, height: 0.82, depth: 0.84 }, modelPath: 'Sink_01.glb', polyCount: 12300 })
+            new Model3D({ id: 'couch_02', name: 'Modern Prop Couch', category: 'seating', tags: ['sofa', 'living room', 'grey'], dimensions: { width: 2.5, height: 0.9, depth: 1.0 }, modelPath: 'SM_Prop_Couch_02.glb', polyCount: 15000 }),
+            new Model3D({ id: 'table_01', name: 'Coffee Table', category: 'surface', tags: ['table', 'wood', 'center'], dimensions: { width: 1.2, height: 0.45, depth: 0.6 }, modelPath: 'Table_01.glb', polyCount: 5000 }),
+            new Model3D({ id: 'fridge_01', name: 'Kitchen Fridge', category: 'appliances', tags: ['kitchen', 'metal', 'tall'], dimensions: { width: 0.9, height: 1.8, depth: 0.7 }, modelPath: 'Fridge_01.glb', polyCount: 8000 }),
+            new Model3D({ id: 'sink_01', name: 'Kitchen Sink', category: 'appliances', tags: ['kitchen', 'water', 'white'], dimensions: { width: 0.8, height: 0.9, depth: 0.6 }, modelPath: 'Sink_01.glb', polyCount: 6000 })
         ];
     }
 }
@@ -209,7 +201,8 @@ class SceneBuilder {
         if (!this.scene) return;
         const toRemove = [];
         this.scene.traverse(obj => {
-            if (obj.isMesh && !obj.userData?.isFloor && !obj.userData?.isGrid) {
+            // Удаляем ВСЕ объекты, у которых есть userData.modelId (и меши, и группы)
+            if (obj.userData?.modelId && !obj.userData?.isFloor && !obj.userData?.isGrid) {
                 toRemove.push(obj);
             }
         });
@@ -223,72 +216,69 @@ class SceneBuilder {
         });
     }
 
-async addModel(modelData) {
-    if (!modelData.dimensions) return null;
+    async addModel(modelData) {
+        if (!modelData.dimensions) return null;
 
-    // Используем modelPath из models.json
-    const modelFileName = modelData.modelPath;
-    if (!modelFileName) {
-        console.warn(`⚠️ Нет modelPath для ${modelData.id}`);
-        return this._createFallbackBox(modelData);
+        const modelFileName = modelData.modelPath;
+        if (!modelFileName) {
+            console.warn(`⚠️ Нет modelPath для ${modelData.id}`);
+            return this._createFallbackBox(modelData);
+        }
+
+        const modelUrl = `${CONFIG.modelsBaseUrl}/${modelFileName}`;
+        console.log(`📥 Загрузка: ${modelUrl}`);
+
+        try {
+            const loader = new THREE.GLTFLoader();
+            const gltf = await new Promise((resolve, reject) => {
+                loader.load(modelUrl, resolve, undefined, reject);
+            });
+
+            const model = gltf.scene;
+
+            // Скейлинг под размеры
+            const box = new THREE.Box3().setFromObject(model);
+            const size = new THREE.Vector3();
+            box.getSize(size);
+
+            const targetW = modelData.dimensions.width || 1;
+            const targetH = modelData.dimensions.height || 1;
+            const targetD = modelData.dimensions.depth || 1;
+
+            const scaleX = targetW / (size.x || 1);
+            const scaleY = targetH / (size.y || 1);
+            const scaleZ = targetD / (size.z || 1);
+            const scale = Math.min(scaleX, scaleY, scaleZ);
+
+            model.scale.setScalar(scale || 1);
+            model.position.set(
+                (Math.random() - 0.5) * 3,
+                (size.y * scale) / 2,
+                (Math.random() - 0.5) * 2.5
+            );
+
+            model.traverse(child => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
+            });
+
+            // ВАЖНО: userData устанавливаем на корневую группу
+            model.userData = {
+                modelId: modelData.id,
+                modelName: modelData.name,
+                category: modelData.category
+            };
+
+            this.scene.add(model);
+            console.log(`✅ Загружено: ${modelData.name}`);
+            return model;
+        } catch (err) {
+            console.warn(`⚠️ Ошибка загрузки ${modelData.name}: ${err.message}`);
+            return this._createFallbackBox(modelData);
+        }
     }
-
-    const modelUrl = `${CONFIG.modelsBaseUrl}/${modelFileName}`;
-    console.log(`📥 Загрузка: ${modelUrl}`);
-
-    try {
-        const loader = new THREE.GLTFLoader();
-
-        const gltf = await new Promise((resolve, reject) => {
-            loader.load(modelUrl, resolve, undefined, reject);
-        });
-
-        const mesh = gltf.scene;
-
-        // Скейлинг под размеры
-        const box = new THREE.Box3().setFromObject(mesh);
-        const size = new THREE.Vector3();
-        box.getSize(size);
-
-        const targetW = modelData.dimensions.width || 1;
-        const targetH = modelData.dimensions.height || 1;
-        const targetD = modelData.dimensions.depth || 1;
-
-        const scaleX = targetW / (size.x || 1);
-        const scaleY = targetH / (size.y || 1);
-        const scaleZ = targetD / (size.z || 1);
-        const scale = Math.min(scaleX, scaleY, scaleZ);
-
-        mesh.scale.setScalar(scale || 1);
-
-        // Позиция
-        mesh.position.set(
-            (Math.random() - 0.5) * 3,
-            (size.y * scale) / 2,
-            (Math.random() - 0.5) * 2.5
-        );
-
-        mesh.traverse(child => {
-            if (child.isMesh) {
-                child.castShadow = true;
-                child.receiveShadow = true;
-            }
-        });
-
-        mesh.userData = {
-            modelId: modelData.id,
-            modelName: modelData.name,
-            category: modelData.category
-        };
-
-        this.scene.add(mesh);
-        console.log(`✅ Загружено: ${modelData.name}`);
-        return mesh;
-    } catch (err) {
-        console.warn(`⚠️ Ошибка загрузки ${modelData.name}: ${err.message}`);
-        return this._createFallbackBox(modelData);
-    }
-}
 
     _createFallbackBox(modelData) {
         const w = modelData.dimensions?.width || 0.8;
@@ -311,7 +301,10 @@ async addModel(modelData) {
         for (const modelData of modelsData) {
             const originalModel = window.app?.db?.getById(modelData.id);
             if (originalModel) {
-                await this.addModel(originalModel);
+                const model = await this.addModel(originalModel);
+                if (model && modelData.position) {
+                    model.position.set(modelData.position.x, modelData.position.y, modelData.position.z);
+                }
                 restoredModels.push(originalModel);
             }
         }
@@ -339,16 +332,27 @@ async addModel(modelData) {
     getCurrentSceneData() {
         const models = [];
         this.scene.traverse(obj => {
-            if (obj.isMesh && obj.userData?.modelId && !obj.userData?.isFloor && !obj.userData?.isGrid) {
+            // Ищем по userData.modelId у ЛЮБЫХ объектов
+            if (obj.userData?.modelId && !obj.userData?.isFloor && !obj.userData?.isGrid) {
+                // Получаем размеры (для Group и для Mesh)
+                let width = 1, height = 1, depth = 1;
+                const box = new THREE.Box3().setFromObject(obj);
+                const size = new THREE.Vector3();
+                box.getSize(size);
+                width = size.x;
+                height = size.y;
+                depth = size.z;
+
                 models.push({
                     id: obj.userData.modelId,
                     name: obj.userData.modelName,
                     category: obj.userData.category,
-                    dimensions: { width: obj.geometry.parameters.width, height: obj.geometry.parameters.height, depth: obj.geometry.parameters.depth },
+                    dimensions: { width, height, depth },
                     position: { x: obj.position.x, y: obj.position.y, z: obj.position.z }
                 });
             }
         });
+        console.log(`🔍 Найдено ${models.length} моделей в сцене`);
         return models;
     }
 
@@ -356,7 +360,6 @@ async addModel(modelData) {
         return new Promise((resolve) => {
             if (this.controls) this.controls.update();
             this.renderer.render(this.scene, this.camera);
-
             setTimeout(() => {
                 this.renderer.render(this.scene, this.camera);
                 const canvas = this.renderer.domElement;
@@ -688,8 +691,10 @@ class NookifyApp {
         if (loading) loading.classList.add('active');
         try {
             let results = this.db.filterByPrompt(prompt);
-            if (results.length === 0) results = this.db.models.slice(0, 3);
-            results = results.slice(0, 4);
+            if (results.length === 0) results = this.db.models.slice(0, 4);
+            results = results.slice(0, 6);
+
+            console.log(`🎯 Найдено моделей: ${results.length}`);
 
             if (this.viewer) {
                 this.viewer.clear();
@@ -701,9 +706,10 @@ class NookifyApp {
                         this.currentModelsInScene.push(model);
                     }
                 }
+                console.log(`✅ Всего добавлено моделей: ${this.currentModelsInScene.length}`);
             }
 
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise(resolve => setTimeout(resolve, 800));
 
             let screenshotDataURL = null;
             if (this.viewer) {
@@ -813,7 +819,7 @@ class NookifyApp {
 
         if (this.viewer && this.viewer.scene) {
             this.viewer.scene.traverse(obj => {
-                if (obj.isMesh && obj.userData?.modelId && !obj.userData?.isFloor && !obj.userData?.isGrid) {
+                if (obj.userData?.modelId && !obj.userData?.isFloor && !obj.userData?.isGrid) {
                     const originalModel = this.db.getById(obj.userData.modelId);
                     if (originalModel) {
                         exportModels.push(originalModel);

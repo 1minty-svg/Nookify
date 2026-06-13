@@ -47,9 +47,9 @@ class SceneBuilder {
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0xf8fafc);
 
-        this.camera = new THREE.PerspectiveCamera(45, this.container.clientWidth / this.container.clientHeight, 0.1, 100);
-        this.camera.position.set(6, 5, 8);
-        this.camera.lookAt(3, 0.5, 3);
+        this.camera = new THREE.PerspectiveCamera(45, this.container.clientWidth / this.container.clientHeight, 0.1, 200);
+        this.camera.position.set(14, 10, 16);
+        this.camera.lookAt(5, 0.5, 5);
 
         this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
         this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
@@ -60,7 +60,7 @@ class SceneBuilder {
         this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.05;
-        this.controls.target.set(3, 0.5, 3); // Центр 6x6 комнаты
+        this.controls.target.set(5, 0.5, 5); // Центр 10x10 комнаты
 
         this._initLights();
         this._initFloor();
@@ -84,15 +84,14 @@ class SceneBuilder {
         const grid = new THREE.GridHelper(10, 20, 0x0066cc, 0xcbd5e1);
         grid.material.transparent = true;
         grid.material.opacity = 0.35;
-        grid.position.y = -0.01;
+        grid.position.set(5, -0.01, 5);
         grid.userData = { isGrid: true };
         this.scene.add(grid);
 
-        // Комната 6x6, смещаем центр, чтобы комната начиналась от (0,0) до (6,6)
         const planeMat = new THREE.MeshStandardMaterial({ color: 0xf1f5f9, roughness: 0.7 });
-        const plane = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), planeMat);
+        const plane = new THREE.Mesh(new THREE.PlaneGeometry(10, 10), planeMat);
         plane.rotation.x = -Math.PI / 2;
-        plane.position.set(3, -0.02, 3);
+        plane.position.set(5, -0.02, 5);
         plane.receiveShadow = true;
         plane.userData = { isFloor: true };
         this.scene.add(plane);
@@ -134,29 +133,11 @@ class SceneBuilder {
             });
 
             const model = gltf.scene;
-            const box = new THREE.Box3().setFromObject(model);
-            const size = new THREE.Vector3();
-            box.getSize(size);
 
-            const targetW = item.width ?? item.dimensions?.width ?? null;
-            const targetH = item.height ?? item.dimensions?.height ?? null;
-            const targetD = item.depth ?? item.dimensions?.depth ?? null;
-
-            if (targetW && targetH && targetD && size.x > 0 && size.y > 0 && size.z > 0) {
-                const scaleX = targetW / size.x;
-                const scaleY = targetH / size.y;
-                const scaleZ = targetD / size.z;
-                const scale = Math.min(scaleX, scaleY, scaleZ);
-                model.scale.setScalar(scale || 1);
-            }
-
-            const scaledBox = new THREE.Box3().setFromObject(model);
-            const scaledSize = new THREE.Vector3();
-            scaledBox.getSize(scaledSize);
+            // Масштаб не трогаем — все модели уже в реальном масштабе 1:1
 
             const px = item.x ?? item.pos_x ?? item.posX ?? item.position?.x ?? 0;
-            const rawY = item.y ?? item.pos_y ?? item.posY ?? item.position?.y ?? null;
-            const py = (rawY !== null && rawY !== 0) ? rawY : (scaledSize.y / 2);
+            const py = item.y ?? item.pos_y ?? item.posY ?? item.position?.y ?? 0;
             const pz = item.z ?? item.pos_z ?? item.posZ ?? item.position?.z ?? 0;
 
             model.position.set(px, py, pz);
@@ -174,8 +155,8 @@ class SceneBuilder {
             model.userData = {
                 modelId: item.model_id || item.id || 'minio_model',
                 modelName: item.name || item.modelName || 'Object',
-                category: item.category || 'FURNITURE',
-                dimensions: { width: targetW || size.x, height: targetH || size.y, depth: targetD || size.z }
+                modelUrl: modelUrl,
+                category: item.category || 'FURNITURE'
             };
 
             this.scene.add(model);
@@ -198,7 +179,7 @@ class SceneBuilder {
         box.receiveShadow = true;
 
         const px = item.x ?? item.pos_x ?? item.posX ?? item.position?.x ?? 0;
-        const py = item.y ?? item.pos_y ?? item.posY ?? item.position?.y ?? (h / 2);
+        const py = (item.y ?? item.pos_y ?? item.posY ?? item.position?.y ?? 0) + h / 2; // fallback-куб центрируем по высоте
         const pz = item.z ?? item.pos_z ?? item.posZ ?? item.position?.z ?? 0;
         box.position.set(px, py, pz);
 

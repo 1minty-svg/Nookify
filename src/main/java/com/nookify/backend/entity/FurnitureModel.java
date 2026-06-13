@@ -20,8 +20,8 @@ public class FurnitureModel {
     @Column(nullable = false, unique = true)
     private String name; // Уникальное имя, например "SM_Prop_Fridge_02"
 
-    @Enumerated(EnumType.STRING)
-    private FurnitureCategory category;
+//    @Enumerated(EnumType.STRING)
+//    private FurnitureCategory category;
 
     @Column(name = "model_path", nullable = false)
     private String modelPath; // Имя файла в бакете MinIO: "Fridge_02.glb"

@@ -12,7 +12,6 @@
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="category" type="VARCHAR(100)"/>
             <column name="model_path" type="VARCHAR(512)"/>
             <column name="width" type="DOUBLE PRECISION"/>
             <column name="height" type="DOUBLE PRECISION"/>

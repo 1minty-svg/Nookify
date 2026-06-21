@@ -88,7 +88,19 @@ header {
     display: block;
     margin: 0 auto;     /* Жёсткая центровка по горизонтали */
     position: relative;
-    top: -95px;
+    /* Логотип задран вверх отрицательным top и визуально наезжает на
+       шапку (см. ниже). Будучи позиционированным элементом, он по
+       порядку в DOM рисуется поверх header и перехватывал клики по
+       кнопке Log In и переключателю языка, хотя сам логотип кликов
+       не обрабатывает. pointer-events:none пропускает клики "сквозь"
+       картинку к шапке. */
+    pointer-events: none;
+    /* Раньше было фиксированное -95px на всех экранах. Лого скейлится
+       по ширине контейнера, а отступ — нет, поэтому на средних/мелких
+       экранах лого с тегляйном расползались. clamp() плавно уменьшает
+       сдвиг вместе с шириной экрана: -95px на широких десктопах,
+       -20px на маленьких телефонах. */
+    top: clamp(-95px, -5.3vw, -20px);
 }
 
 .header-lines {
@@ -104,12 +116,15 @@ header {
     height: 2px;
     background-color: #003A75;
     border-radius: 2px;
-    flex: none;
+    flex-shrink: 1;
+    min-width: 0;
 }
 
-.header-line:nth-child(1) { width: 310px; }
-.header-line:nth-child(2) { width: 250px; }
-.header-line:nth-child(3) { width: 630px; }
+/* Пропорции через flex-basis вместо жёстких px — линии плавно сжимаются
+   на любой ширине экрана и никогда не вылезают за пределы шапки */
+.header-line:nth-child(1) { flex: 0 1 310px; }
+.header-line:nth-child(2) { flex: 0 1 250px; }
+.header-line:nth-child(3) { flex: 0 1 630px; }
 
 .nav-buttons {
     display: flex;
@@ -160,7 +175,10 @@ header {
 .tagline {
     font-size: 30px;
     z-index: 2;
-    margin-top: -600px;
+    /* Было фиксированное -600px на десктопе и резкий скачок до -80px
+       только на ≤768px — между этими точками слоган либо налезал на
+       лого, либо улетал слишком далеко. clamp() даёт плавный переход. */
+    margin-top: clamp(-600px, calc(307px - 50.4vw), -80px);
     color: #1a3a52;
     margin-bottom: 120px;
     font-weight: 500;
@@ -219,25 +237,37 @@ header {
     fill: white;
 }
 
-/* === LOADING === */
+/* === LOADING ===
+   Раньше #loading был обычным блоком в потоке документа: при появлении
+   (display:block) он раздвигал страницу и всё съезжало вниз — некрасиво
+   и дёргано. Теперь это фиксированный полноэкранный оверлей, как у
+   .result-modal — тёмный блюр-фон, по центру спиннер и подпись, а сама
+   модалка со сценой плавно открывается уже под ним (z-index ниже),
+   так что после исчезновения загрузки сразу видно результат. */
 .loading {
     display: none;
-    text-align: center;
-    padding: 60px;
+    position: fixed;
+    inset: 0;
+    z-index: 2500;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: rgba(10, 20, 35, 0.65);
+    backdrop-filter: blur(8px);
 }
 
 .loading.active {
-    display: block;
+    display: flex;
 }
 
 .spinner {
     width: 60px;
     height: 60px;
-    border: 4px solid rgba(0, 102, 204, 0.1);
-    border-top-color: #0066cc;
+    border: 4px solid rgba(255, 255, 255, 0.25);
+    border-top-color: #ffffff;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin: 0 auto 20px;
 }
 
 @keyframes spin {
@@ -246,8 +276,9 @@ header {
 
 .loading-text {
     font-size: 18px;
-    color: #1a3a52;
+    color: #ffffff;
     font-weight: 500;
+    text-align: center;
 }
 
 /* === FULL-WIDTH DIVIDER === */
@@ -275,10 +306,9 @@ header {
 }
 
 .line-segment {
-    height: 3px;
+    height: 2px;
     background-color: #003A75;
     border-radius: 2px;
-    opacity: 0.6;
 }
 
 .line-segment:nth-child(1) { width: 12%; }
@@ -468,9 +498,17 @@ header {
     stroke: #ff4757;
 }
 
-/* === MODAL WINDOW === */
+/* === MODAL WINDOW ===
+   ВАЖНО: раньше тут было display:none / display:flex.
+   Из-за этого, пока модалка скрыта, у .modal-image-container был
+   clientWidth/clientHeight = 0, three.js рендерил в нулевой canvas,
+   и скриншот сцены получался пустым. Теперь модалка всегда "в раскладке"
+   (display:flex), а скрывается через visibility/opacity — размеры
+   контейнера корректны с самого первого кадра. */
 .result-modal {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: fixed;
     inset: 0;
     z-index: 1000;
@@ -478,13 +516,16 @@ header {
     backdrop-filter: blur(8px);
     padding: 40px;
     overflow-y: auto;
-    animation: fadeIn 0.3s ease;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
 .result-modal.active {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 @keyframes fadeIn {
@@ -500,6 +541,9 @@ header {
     box-shadow: 0 25px 100px rgba(0, 0, 0, 0.3);
     overflow: hidden;
     position: relative;
+}
+
+.result-modal.active .modal-content {
     animation: slideUp 0.4s ease;
 }
 
@@ -937,9 +981,9 @@ header {
         width: 85%;
     }
 
-    .header-line:nth-child(1) { width: 200px; }
-    .header-line:nth-child(2) { width: 150px; }
-    .header-line:nth-child(3) { width: 400px; }
+    .header-line:nth-child(1) { flex-basis: 200px; }
+    .header-line:nth-child(2) { flex-basis: 150px; }
+    .header-line:nth-child(3) { flex-basis: 400px; }
 
     .explore-title {
         font-size: 36px;
@@ -972,9 +1016,9 @@ header {
         justify-content: center;
     }
 
-    .header-line:nth-child(1) { width: 150px; }
-    .header-line:nth-child(2) { width: 100px; }
-    .header-line:nth-child(3) { width: 250px; }
+    .header-line:nth-child(1) { flex-basis: 150px; }
+    .header-line:nth-child(2) { flex-basis: 100px; }
+    .header-line:nth-child(3) { flex-basis: 250px; }
 
     .hero-logo {
         width: 100%;
@@ -983,7 +1027,6 @@ header {
 
     .tagline {
         font-size: 24px;
-        margin-top: -80px;
         margin-bottom: 60px;
     }
 
@@ -1024,6 +1067,10 @@ header {
         border-radius: 24px;
     }
 
+    .modal-body {
+        min-height: auto;
+    }
+
     .modal-sidebar {
         padding: 24px;
     }
@@ -1031,9 +1078,49 @@ header {
     .result-modal {
         padding: 20px;
     }
+
+    /* Декоративный блоб 840px шириной не скейлится и на узких экранах
+       либо вылезает за пределы секции, либо перекрывает контент */
+    .blob-explore {
+        display: none;
+    }
 }
 
 @media (max-width: 480px) {
+    header {
+        padding: 15px 20px;
+    }
+
+    .container {
+        padding: 10px 20px;
+    }
+
+    .explore-title {
+        font-size: 26px;
+    }
+
+    .tabs {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .tab {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+
+    .result-modal {
+        padding: 10px;
+    }
+
+    .modal-sidebar {
+        padding: 18px;
+    }
+
+    .export-title {
+        font-size: 20px;
+    }
+
     .footer-links {
         gap: 16px;
         flex-direction: column;
@@ -1128,21 +1215,6 @@ header {
     white-space: pre-wrap;
 }
 
-
-/* === 3D VIEWER === */
-#three-container, .modal-image-container {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    border-radius: 16px;
-    min-height: 400px;
-    position: relative;
-    overflow: hidden;
-}
-#three-container canvas {
-    width: 100% !important;
-    height: 100% !important;
-    display: block;
-    border-radius: 16px;
-}
 
 /* Добавь в конец файла style.css */
 .auth-close {

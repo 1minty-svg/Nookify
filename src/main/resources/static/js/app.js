@@ -72,12 +72,31 @@ class SceneBuilder {
     _initLights() {
         const ambient = new THREE.AmbientLight(0xffffff, 0.6);
         const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.set(5, 8, 5);
+
+        // Раньше позиция света (5,8,5) и цель (5,0,5) совпадали по X и Z —
+        // отличалась только высота, то есть луч шёл строго вертикально
+        // вниз, как солнце в зените. Из-за этого тень ложилась ровно под
+        // объектами и не давала ощущения объёма. Сдвигаем свет по
+        // горизонтали относительно цели (оставляя высоту похожей) —
+        // теперь луч идёт под углом, и тень отъезжает в сторону.
+        dirLight.position.set(9, 9, 1);
+        dirLight.target.position.set(5, 0, 5);
+
         dirLight.castShadow = true;
-        dirLight.shadow.mapSize.set(1024, 1024);
+        dirLight.shadow.mapSize.set(2048, 2048);
+        dirLight.shadow.camera.left = -8;
+        dirLight.shadow.camera.right = 8;
+        dirLight.shadow.camera.top = 8;
+        dirLight.shadow.camera.bottom = -8;
+        dirLight.shadow.camera.near = 1;
+        dirLight.shadow.camera.far = 30;
+        dirLight.shadow.bias = -0.0015;
+        dirLight.shadow.normalBias = 0.02;
+        dirLight.shadow.camera.updateProjectionMatrix();
+
         const fillLight = new THREE.PointLight(0x4466cc, 0.3);
         fillLight.position.set(-2, 2, 3);
-        this.scene.add(ambient, dirLight, fillLight);
+        this.scene.add(ambient, dirLight, dirLight.target, fillLight);
     }
 
     _initFloor() {
@@ -267,6 +286,7 @@ class NookifyApp {
         this._initViewer();
         this._bindUI();
         this._bindExportSettings();
+        this._bindModalHeart();
         this._fixImageErrors();
         this._restoreLikes();
         this._restoreGeneratedCards();
@@ -329,6 +349,13 @@ class NookifyApp {
         if (existingModelsData && !savedScenes.has(newIndex)) {
             saveSceneToStorage(newIndex, { prompt, screenshot: screenshotDataURL, modelsData: existingModelsData });
         }
+
+        // Сразу применяем фильтр активного таба, иначе свежесозданная
+        // (или восстановленная при загрузке страницы) карточка повисает
+        // видимой во всех вкладках, включая Trending
+        const activeTab = document.querySelector('.tab.active')?.textContent.trim();
+        if (activeTab) this._filterCards(activeTab);
+
         return newCard;
     }
 
@@ -346,6 +373,35 @@ class NookifyApp {
             });
         }
         card.addEventListener('click', () => this._openModal(card));
+    }
+
+    // Раньше у .modal-heart не было ни одного addEventListener — кнопка
+    // лайка внутри открытой модалки была кликабельна визуально (CSS
+    // под .liked уже существовал), но клик никуда не вёл. Берём индекс
+    // открытой карточки из modal.dataset.currentCardIndex (его проставляет
+    // _openModalByPrompt) и синхронизируем лайк с сердечком на самой
+    // карточке в гриде + localStorage, как это уже сделано для карточек.
+    _bindModalHeart() {
+        const modalHeart = document.querySelector('.modal-heart');
+        const modal = document.getElementById('resultModal');
+        if (!modalHeart || !modal) return;
+
+        modalHeart.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const idx = modal.dataset.currentCardIndex;
+            if (idx === undefined || idx === null || idx === '') return;
+
+            modalHeart.classList.toggle('liked');
+            const isLiked = modalHeart.classList.contains('liked');
+            localStorage.setItem(`nookify_like_${idx}`, isLiked);
+
+            const card = document.querySelector(`.card[data-card-index="${idx}"]`);
+            const cardHeart = card?.querySelector('.card-heart');
+            if (cardHeart) cardHeart.classList.toggle('liked', isLiked);
+
+            const activeTab = document.querySelector('.tab.active')?.textContent.trim();
+            if (['Liked', 'Понравившиеся'].includes(activeTab)) this._filterCards(activeTab);
+        });
     }
 
     _bindUI() {
@@ -366,18 +422,29 @@ class NookifyApp {
     _bindExportSettings() {
         const allGroups = document.querySelectorAll('#resultModal .option-group');
         allGroups.forEach(group => {
-            const label = group.closest('.export-section')?.querySelector('.export-label')?.textContent || '';
             const btns = group.querySelectorAll('.option-btn');
+            const values = Array.from(btns).map(b => b.textContent.trim());
+
+            // ВАЖНО: у каждой .export-section (Geometry / Material) лежит ПО ДВЕ
+            // .option-group, а .export-label на секции один. Раньше тип настройки
+            // определялся по этому общему лейблу секции — поэтому для второй группы
+            // в каждой секции (fbx/obj/stl и 2K/4K) label всегда был "Geometry" или
+            // "Material", и клики по Format/Resolution никуда не записывались.
+            // Теперь определяем тип группы по самим значениям кнопок.
+            let settingKey = null;
+            if (values.includes('Low Poly') || values.includes('High Poly')) settingKey = 'geometry';
+            else if (values.includes('fbx') || values.includes('obj') || values.includes('stl')) settingKey = 'format';
+            else if (values.includes('Shaded') || values.includes('PBR')) settingKey = 'material';
+            else if (values.includes('2K') || values.includes('4K')) settingKey = 'resolution';
+
             btns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     btns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     const val = btn.textContent.trim();
-                    if (label === 'Geometry') currentExportSettings.geometry = val;
-                    if (label === 'Format') currentExportSettings.format = val.toLowerCase();
-                    if (label === 'Material') currentExportSettings.material = val;
-                    if (label === 'Resolution') currentExportSettings.resolution = val;
+                    if (settingKey === 'format') currentExportSettings.format = val.toLowerCase();
+                    else if (settingKey) currentExportSettings[settingKey] = val;
                     this._updateSliderPosition(group);
                 });
             });
@@ -404,11 +471,15 @@ class NookifyApp {
         });
     }
 
-    async _generate() {
+    async _generate(promptOverride = null) {
         const input = document.getElementById('searchInput');
-        const prompt = input?.value.trim();
+        // Раньше промт всегда брался из домашнего поля поиска, поэтому
+        // правка текста прямо в модалке (Redo) игнорировалась.
+        const prompt = (promptOverride ?? input?.value ?? '').trim();
         if (!prompt) return;
         this.currentPrompt = prompt;
+        if (input) input.value = prompt;
+
         const loading = document.getElementById('loading');
         if (loading) loading.classList.add('active');
 
@@ -511,11 +582,68 @@ class NookifyApp {
 // ========================================
 // INITIALIZATION AND EVENT BINDING (CLEANED)
 // ========================================
+
+// Раньше тут был только searchPlaceholder, поэтому переключение языка
+// реально меняло только плейсхолдер поля поиска — все остальные
+// data-i18n элементы (слоган, вкладки, заголовки) просто не находили
+// перевод и оставались как есть.
 const translations = {
-    en: { searchPlaceholder: "Type your wishes" },
-    ru: { searchPlaceholder: "Введи свои пожелания" }
+    en: {
+        tagline: "AI Interior Generator<br>Bring Your Dreams to Life in Seconds",
+        searchPlaceholder: "Type your wishes",
+        exploreTitle: "Explore",
+        tabTrending: "Trending",
+        tabMine: "Mine",
+        tabLiked: "Liked",
+        loginEmail: "Email",
+        loginPass: "Password",
+        loadingText: "Creating your dream interior..."
+    },
+    ru: {
+        tagline: "ИИ-генератор интерьеров<br>Воплоти мечту за секунды",
+        searchPlaceholder: "Введи свои пожелания",
+        exploreTitle: "Обзор",
+        tabTrending: "Тренды",
+        tabMine: "Мои",
+        tabLiked: "Понравившиеся",
+        loginEmail: "Эл. почта",
+        loginPass: "Пароль",
+        loadingText: "Создаём ваш дизайн мечты..."
+    }
 };
+
+// Заголовок/кнопка/футер модалки авторизации зависят не только от языка,
+// но и от режима (вход / регистрация) — поэтому ведём их отдельной
+// функцией, а не общим циклом по data-i18n.
+const authTranslations = {
+    en: {
+        loginTitle: "Welcome Back",
+        registerTitle: "Create Account",
+        loginSubmit: "Log In",
+        registerSubmit: "Sign Up",
+        noAccount: "Don't have an account?",
+        signUp: "Sign up",
+        haveAccount: "Already have an account?",
+        logIn: "Log in",
+        loginSuccess: "✅ Login successful!",
+        registerSuccess: "✅ Account created!"
+    },
+    ru: {
+        loginTitle: "С возвращением",
+        registerTitle: "Создать аккаунт",
+        loginSubmit: "Войти",
+        registerSubmit: "Зарегистрироваться",
+        noAccount: "Нет аккаунта?",
+        signUp: "Зарегистрироваться",
+        haveAccount: "Уже есть аккаунт?",
+        logIn: "Войти",
+        loginSuccess: "✅ Вход выполнен!",
+        registerSuccess: "✅ Аккаунт создан!"
+    }
+};
+
 let currentLang = localStorage.getItem('nookify_lang') || 'en';
+let authMode = 'login'; // 'login' | 'register'
 
 function updateLanguage(lang) {
     currentLang = lang;
@@ -526,14 +654,54 @@ function updateLanguage(lang) {
     });
     const searchInput = document.getElementById('searchInput');
     if (searchInput && translations[lang].searchPlaceholder) searchInput.placeholder = translations[lang].searchPlaceholder;
+    renderAuthModal();
+}
+
+// Раньше кнопка "Sign up" просто ничего не делала — на неё не был навешан
+// обработчик. Используем тот же span как переключатель режима
+// вход/регистрация прямо в существующей форме (полей всё равно те же —
+// email + пароль), и перерисовываем заголовок/кнопку/футер под режим и язык.
+function renderAuthModal() {
+    const t = authTranslations[currentLang] || authTranslations.en;
+    const titleEl = document.querySelector('.auth-title');
+    const submitBtn = document.querySelector('.btn-auth');
+    const footerEl = document.querySelector('.auth-footer');
+    if (!titleEl || !submitBtn || !footerEl) return;
+
+    if (authMode === 'register') {
+        titleEl.textContent = t.registerTitle;
+        submitBtn.textContent = t.registerSubmit;
+        footerEl.innerHTML = `${t.haveAccount} <span id="signupBtn" style="color:#0066cc; cursor:pointer; font-weight:600;">${t.logIn}</span>`;
+    } else {
+        titleEl.textContent = t.loginTitle;
+        submitBtn.textContent = t.loginSubmit;
+        footerEl.innerHTML = `${t.noAccount} <span id="signupBtn" style="color:#0066cc; cursor:pointer; font-weight:600;">${t.signUp}</span>`;
+    }
 }
 
 window.toggleLanguage = () => updateLanguage(currentLang === 'en' ? 'ru' : 'en');
-window.regenerateDesign = () => window.app?._generate();
+window.regenerateDesign = () => {
+    // Раньше Redo всегда брал текст из домашнего поля поиска, игнорируя
+    // правки прямо в модалке.
+    const editedPrompt = document.getElementById('promptText')?.textContent.trim();
+    window.app?._generate(editedPrompt || null);
+};
 window.downloadDesign = () => window.app?.exportModel();
-window.openAuthModal = () => { document.getElementById('authModal')?.style.setProperty('display', 'flex', 'important'); document.body.style.overflow = 'hidden'; };
-window.closeAuthModal = () => { document.getElementById('authModal')?.style.setProperty('display', 'none', 'important'); document.body.style.overflow = ''; };
-window.handleLogin = (e) => { e?.preventDefault(); alert(currentLang === 'en' ? '✅ Login successful!' : '✅ Вход выполнен!'); window.closeAuthModal(); return false; };
+window.openAuthModal = () => {
+    document.getElementById('authModal')?.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    renderAuthModal();
+};
+window.closeAuthModal = () => { document.getElementById('authModal')?.classList.remove('active'); document.body.style.overflow = ''; };
+window.handleLogin = (e) => {
+    e?.preventDefault();
+    const t = authTranslations[currentLang] || authTranslations.en;
+    alert(authMode === 'register' ? t.registerSuccess : t.loginSuccess);
+    window.closeAuthModal();
+    authMode = 'login';
+    renderAuthModal();
+    return false;
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     // Инициализация ядра
@@ -541,20 +709,32 @@ document.addEventListener('DOMContentLoaded', () => {
     window.app.init();
     updateLanguage(currentLang);
 
-    // Модалки
-    document.querySelectorAll('.modal-close, .modal-overlay, .auth-close').forEach(el => {
-        el.addEventListener('click', (e) => {
-            if (e.target === el || el.classList.contains('modal-close') || el.classList.contains('auth-close')) {
-                el.closest('.modal-container, .auth-modal')?.classList.remove('active');
-                if(el.closest('#authModal')) window.closeAuthModal();
+    // Закрытие модалок кликом по затемнённому фону (мимо modal-content/auth-content)
+    document.querySelectorAll('.result-modal, .auth-modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
                 document.body.style.overflow = '';
             }
         });
     });
 
+    // "Sign up" / "Log in" — переключатель режима. Раньше у #signupBtn
+    // вообще не было обработчика клика, поэтому кнопка визуально
+    // существовала, но ничего не делала. Сам span пересоздаётся через
+    // innerHTML в renderAuthModal() при каждом переключении режима/языка,
+    // поэтому обычный addEventListener на конкретный элемент слетел бы
+    // после первой же перерисовки — вместо этого вешаем один делегирующий
+    // обработчик на document и проверяем id цели клика.
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.id === 'signupBtn') {
+            authMode = authMode === 'login' ? 'register' : 'login';
+            renderAuthModal();
+        }
+    });
+
     document.addEventListener('keydown', e => { if (e.key === 'Escape') {
-        document.querySelectorAll('.modal-container, .auth-modal').forEach(m => m.classList.remove('active'));
-        window.closeAuthModal();
+        document.querySelectorAll('.result-modal, .auth-modal').forEach(m => m.classList.remove('active'));
         document.body.style.overflow = '';
     }});
 

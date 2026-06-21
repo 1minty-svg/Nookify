@@ -1,6 +1,3 @@
-// ========================================
-// NOOKIFY APP - WITH GLTF SUPPORT & BACKEND INTEGRATION
-// ========================================
 
 const CONFIG = {
     modelsBaseUrl: 'http://localhost:8080/api/models',
@@ -25,7 +22,7 @@ function loadSavedScenes() {
         try {
             const parsed = JSON.parse(saved);
             savedScenes = new Map(parsed);
-            console.log(`📦 Loaded ${savedScenes.size} saved scenes`);
+            console.log(`Loaded ${savedScenes.size} saved scenes`);
         } catch(e) { console.warn('Failed to load saved scenes'); }
     }
 }
@@ -35,7 +32,7 @@ function saveSceneToStorage(cardIndex, sceneData) {
     try {
         localStorage.setItem('nookify_saved_scenes', JSON.stringify([...savedScenes]));
     } catch (e) {
-        console.warn('⚠️ localStorage quota exceeded, scene not persisted:', e.message);
+        console.warn('localStorage quota exceeded, scene not persisted:', e.message);
     }
 }
 
@@ -60,7 +57,7 @@ class SceneBuilder {
         this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.05;
-        this.controls.target.set(5, 0.5, 5); // Центр 10x10 комнаты
+        this.controls.target.set(5, 0.5, 5);
 
         this._initLights();
         this._initFloor();
@@ -73,12 +70,6 @@ class SceneBuilder {
         const ambient = new THREE.AmbientLight(0xffffff, 0.6);
         const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
 
-        // Раньше позиция света (5,8,5) и цель (5,0,5) совпадали по X и Z —
-        // отличалась только высота, то есть луч шёл строго вертикально
-        // вниз, как солнце в зените. Из-за этого тень ложилась ровно под
-        // объектами и не давала ощущения объёма. Сдвигаем свет по
-        // горизонтали относительно цели (оставляя высоту похожей) —
-        // теперь луч идёт под углом, и тень отъезжает в сторону.
         dirLight.position.set(9, 9, 1);
         dirLight.target.position.set(5, 0, 5);
 
@@ -139,11 +130,11 @@ class SceneBuilder {
 
         const modelUrl = item.modelUrl || item.model_url || item.downloadUrl || item.url || item.modelPath || item.model_path;
         if (!modelUrl) {
-            console.warn(`⚠️ Бэкенд не прислал URL для:`, item);
+            console.warn(`Бэкенд не прислал URL для:`, item);
             return this._createFallbackBox(item);
         }
 
-        console.log(`📥 Загрузка GLB: ${modelUrl}`);
+        console.log(`Загрузка GLB: ${modelUrl}`);
 
         try {
             const loader = new THREE.GLTFLoader();
@@ -152,8 +143,6 @@ class SceneBuilder {
             });
 
             const model = gltf.scene;
-
-            // Масштаб не трогаем — все модели уже в реальном масштабе 1:1
 
             const px = item.x ?? item.pos_x ?? item.posX ?? item.position?.x ?? 0;
             const py = item.y ?? item.pos_y ?? item.posY ?? item.position?.y ?? 0;
@@ -181,7 +170,7 @@ class SceneBuilder {
             this.scene.add(model);
             return model;
         } catch (err) {
-            console.warn(`⚠️ Ошибка загрузки (${err.message}). Создаю куб-заглушку.`);
+            console.warn(`Ошибка загрузки (${err.message}). Создаю куб-заглушку.`);
             return this._createFallbackBox(item);
         }
     }
@@ -198,7 +187,7 @@ class SceneBuilder {
         box.receiveShadow = true;
 
         const px = item.x ?? item.pos_x ?? item.posX ?? item.position?.x ?? 0;
-        const py = (item.y ?? item.pos_y ?? item.posY ?? item.position?.y ?? 0) + h / 2; // fallback-куб центрируем по высоте
+        const py = (item.y ?? item.pos_y ?? item.posY ?? item.position?.y ?? 0) + h / 2;
         const pz = item.z ?? item.pos_z ?? item.posZ ?? item.position?.z ?? 0;
         box.position.set(px, py, pz);
 
@@ -252,7 +241,7 @@ class SceneBuilder {
                     id: obj.userData.modelId,
                     name: obj.userData.modelName,
                     category: obj.userData.category,
-                    model_url: obj.userData.modelUrl, // Сохраняем url для восстановления
+                    model_url: obj.userData.modelUrl,
                     dimensions: obj.userData.dimensions,
                     position: { x: obj.position.x, y: obj.position.y, z: obj.position.z },
                     rotation: THREE.MathUtils.radToDeg(obj.rotation.y)
@@ -287,10 +276,20 @@ class NookifyApp {
         this._bindUI();
         this._bindExportSettings();
         this._bindModalHeart();
+        this._bindLoadingVideo();
         this._fixImageErrors();
         this._restoreLikes();
         this._restoreGeneratedCards();
-        console.log('🚀 Nookify Frontend Ready');
+        console.log('Nookify Frontend Ready');
+    }
+
+    _bindLoadingVideo() {
+        const visual = document.querySelector('.loading-visual');
+        const video = document.getElementById('loadingVideo');
+        if (!visual || !video) return;
+
+        video.addEventListener('playing', () => visual.classList.add('loaded'));
+        video.addEventListener('error', () => visual.classList.remove('loaded'));
     }
 
     _restoreGeneratedCards() {
@@ -350,9 +349,6 @@ class NookifyApp {
             saveSceneToStorage(newIndex, { prompt, screenshot: screenshotDataURL, modelsData: existingModelsData });
         }
 
-        // Сразу применяем фильтр активного таба, иначе свежесозданная
-        // (или восстановленная при загрузке страницы) карточка повисает
-        // видимой во всех вкладках, включая Trending
         const activeTab = document.querySelector('.tab.active')?.textContent.trim();
         if (activeTab) this._filterCards(activeTab);
 
@@ -375,12 +371,6 @@ class NookifyApp {
         card.addEventListener('click', () => this._openModal(card));
     }
 
-    // Раньше у .modal-heart не было ни одного addEventListener — кнопка
-    // лайка внутри открытой модалки была кликабельна визуально (CSS
-    // под .liked уже существовал), но клик никуда не вёл. Берём индекс
-    // открытой карточки из modal.dataset.currentCardIndex (его проставляет
-    // _openModalByPrompt) и синхронизируем лайк с сердечком на самой
-    // карточке в гриде + localStorage, как это уже сделано для карточек.
     _bindModalHeart() {
         const modalHeart = document.querySelector('.modal-heart');
         const modal = document.getElementById('resultModal');
@@ -425,12 +415,6 @@ class NookifyApp {
             const btns = group.querySelectorAll('.option-btn');
             const values = Array.from(btns).map(b => b.textContent.trim());
 
-            // ВАЖНО: у каждой .export-section (Geometry / Material) лежит ПО ДВЕ
-            // .option-group, а .export-label на секции один. Раньше тип настройки
-            // определялся по этому общему лейблу секции — поэтому для второй группы
-            // в каждой секции (fbx/obj/stl и 2K/4K) label всегда был "Geometry" или
-            // "Material", и клики по Format/Resolution никуда не записывались.
-            // Теперь определяем тип группы по самим значениям кнопок.
             let settingKey = null;
             if (values.includes('Low Poly') || values.includes('High Poly')) settingKey = 'geometry';
             else if (values.includes('fbx') || values.includes('obj') || values.includes('stl')) settingKey = 'format';
@@ -473,8 +457,6 @@ class NookifyApp {
 
     async _generate(promptOverride = null) {
         const input = document.getElementById('searchInput');
-        // Раньше промт всегда брался из домашнего поля поиска, поэтому
-        // правка текста прямо в модалке (Redo) игнорировалась.
         const prompt = (promptOverride ?? input?.value ?? '').trim();
         if (!prompt) return;
         this.currentPrompt = prompt;
@@ -482,6 +464,8 @@ class NookifyApp {
 
         const loading = document.getElementById('loading');
         if (loading) loading.classList.add('active');
+        const loadingVideo = document.getElementById('loadingVideo');
+        if (loadingVideo) loadingVideo.play().catch(() => {});
 
         try {
             console.log(`📡 Отправка запроса на бэкенд: "${prompt}"`);
@@ -510,7 +494,7 @@ class NookifyApp {
 
             this._openModalByPrompt(prompt, newCardIndex);
         } catch (err) {
-            console.error('❌ Ошибка:', err);
+            console.error('Ошибка:', err);
             alert(`Ошибка: ${err.message}`);
         } finally {
             if (loading) loading.classList.remove('active');
@@ -575,18 +559,13 @@ class NookifyApp {
         a.download = `nookify-scene-${Date.now()}.${format}`;
         a.click();
         URL.revokeObjectURL(a.href);
-        alert(`✅ Scene exported as ${format.toUpperCase()}`);
+        alert(`Scene exported as ${format.toUpperCase()}`);
     }
 }
 
-// ========================================
-// INITIALIZATION AND EVENT BINDING (CLEANED)
-// ========================================
+// INITIALIZATION AND EVENT BINDING
 
-// Раньше тут был только searchPlaceholder, поэтому переключение языка
-// реально меняло только плейсхолдер поля поиска — все остальные
-// data-i18n элементы (слоган, вкладки, заголовки) просто не находили
-// перевод и оставались как есть.
+
 const translations = {
     en: {
         tagline: "AI Interior Generator<br>Bring Your Dreams to Life in Seconds",
@@ -612,9 +591,6 @@ const translations = {
     }
 };
 
-// Заголовок/кнопка/футер модалки авторизации зависят не только от языка,
-// но и от режима (вход / регистрация) — поэтому ведём их отдельной
-// функцией, а не общим циклом по data-i18n.
 const authTranslations = {
     en: {
         loginTitle: "Welcome Back",
@@ -643,7 +619,7 @@ const authTranslations = {
 };
 
 let currentLang = localStorage.getItem('nookify_lang') || 'en';
-let authMode = 'login'; // 'login' | 'register'
+let authMode = 'login';
 
 function updateLanguage(lang) {
     currentLang = lang;
@@ -654,13 +630,22 @@ function updateLanguage(lang) {
     });
     const searchInput = document.getElementById('searchInput');
     if (searchInput && translations[lang].searchPlaceholder) searchInput.placeholder = translations[lang].searchPlaceholder;
+
+    const heroLogo = document.querySelector('.hero-logo');
+    if (heroLogo) {
+        heroLogo.src = lang === 'ru' ? 'img/rusnookify.png' : 'img/nookifyMorphText.png';
+    }
+    const langSwitch = document.getElementById('langSwitch');
+
+        if (langSwitch) {
+
+            langSwitch.textContent = lang === 'ru' ? 'En' : 'Ru';
+
+        }
+
     renderAuthModal();
 }
 
-// Раньше кнопка "Sign up" просто ничего не делала — на неё не был навешан
-// обработчик. Используем тот же span как переключатель режима
-// вход/регистрация прямо в существующей форме (полей всё равно те же —
-// email + пароль), и перерисовываем заголовок/кнопку/футер под режим и язык.
 function renderAuthModal() {
     const t = authTranslations[currentLang] || authTranslations.en;
     const titleEl = document.querySelector('.auth-title');
@@ -681,8 +666,7 @@ function renderAuthModal() {
 
 window.toggleLanguage = () => updateLanguage(currentLang === 'en' ? 'ru' : 'en');
 window.regenerateDesign = () => {
-    // Раньше Redo всегда брал текст из домашнего поля поиска, игнорируя
-    // правки прямо в модалке.
+
     const editedPrompt = document.getElementById('promptText')?.textContent.trim();
     window.app?._generate(editedPrompt || null);
 };
@@ -704,12 +688,10 @@ window.handleLogin = (e) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Инициализация ядра
+
     window.app = new NookifyApp();
     window.app.init();
     updateLanguage(currentLang);
-
-    // Закрытие модалок кликом по затемнённому фону (мимо modal-content/auth-content)
     document.querySelectorAll('.result-modal, .auth-modal').forEach(modal => {
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
@@ -719,13 +701,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // "Sign up" / "Log in" — переключатель режима. Раньше у #signupBtn
-    // вообще не было обработчика клика, поэтому кнопка визуально
-    // существовала, но ничего не делала. Сам span пересоздаётся через
-    // innerHTML в renderAuthModal() при каждом переключении режима/языка,
-    // поэтому обычный addEventListener на конкретный элемент слетел бы
-    // после первой же перерисовки — вместо этого вешаем один делегирующий
-    // обработчик на document и проверяем id цели клика.
     document.addEventListener('click', (e) => {
         if (e.target && e.target.id === 'signupBtn') {
             authMode = authMode === 'login' ? 'register' : 'login';
@@ -738,7 +713,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     }});
 
-    // Подмена кнопки логина
     const oldBtn = document.querySelector('.btn-login');
     if (oldBtn) {
         const newBtn = oldBtn.cloneNode(true);

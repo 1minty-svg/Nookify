@@ -1,8 +1,4 @@
-/* ========================================
-NOOKIFY - FIXED STYLESHEET
-======================================== */
 
-/* === RESET & BASE === */
 * {
     margin: 0;
     padding: 0;
@@ -17,7 +13,6 @@ body {
     color: #1a3a52;
 }
 
-/* === LIQUID BACKGROUND === */
 .liquid-bg {
     position: fixed;
     width: 100%;
@@ -86,20 +81,9 @@ header {
     width: 100%;
     height: auto;
     display: block;
-    margin: 0 auto;     /* Жёсткая центровка по горизонтали */
+    margin: 0 auto;
     position: relative;
-    /* Логотип задран вверх отрицательным top и визуально наезжает на
-       шапку (см. ниже). Будучи позиционированным элементом, он по
-       порядку в DOM рисуется поверх header и перехватывал клики по
-       кнопке Log In и переключателю языка, хотя сам логотип кликов
-       не обрабатывает. pointer-events:none пропускает клики "сквозь"
-       картинку к шапке. */
     pointer-events: none;
-    /* Раньше было фиксированное -95px на всех экранах. Лого скейлится
-       по ширине контейнера, а отступ — нет, поэтому на средних/мелких
-       экранах лого с тегляйном расползались. clamp() плавно уменьшает
-       сдвиг вместе с шириной экрана: -95px на широких десктопах,
-       -20px на маленьких телефонах. */
     top: clamp(-95px, -5.3vw, -20px);
 }
 
@@ -120,8 +104,6 @@ header {
     min-width: 0;
 }
 
-/* Пропорции через flex-basis вместо жёстких px — линии плавно сжимаются
-   на любой ширине экрана и никогда не вылезают за пределы шапки */
 .header-line:nth-child(1) { flex: 0 1 310px; }
 .header-line:nth-child(2) { flex: 0 1 250px; }
 .header-line:nth-child(3) { flex: 0 1 630px; }
@@ -159,7 +141,6 @@ header {
     cursor: pointer;
 }
 
-/* === CONTAINER === */
 .container {
     max-width: 1800px;
     margin: 0 auto;
@@ -175,9 +156,6 @@ header {
 .tagline {
     font-size: 30px;
     z-index: 2;
-    /* Было фиксированное -600px на десктопе и резкий скачок до -80px
-       только на ≤768px — между этими точками слоган либо налезал на
-       лого, либо улетал слишком далеко. clamp() даёт плавный переход. */
     margin-top: clamp(-600px, calc(307px - 50.4vw), -80px);
     color: #1a3a52;
     margin-bottom: 120px;
@@ -237,13 +215,7 @@ header {
     fill: white;
 }
 
-/* === LOADING ===
-   Раньше #loading был обычным блоком в потоке документа: при появлении
-   (display:block) он раздвигал страницу и всё съезжало вниз — некрасиво
-   и дёргано. Теперь это фиксированный полноэкранный оверлей, как у
-   .result-modal — тёмный блюр-фон, по центру спиннер и подпись, а сама
-   модалка со сценой плавно открывается уже под ним (z-index ниже),
-   так что после исчезновения загрузки сразу видно результат. */
+/* === LOADING === */
 .loading {
     display: none;
     position: fixed;
@@ -272,6 +244,35 @@ header {
 
 @keyframes spin {
     to { transform: rotate(360deg); }
+}
+
+.loading-visual {
+    position: relative;
+    width: 220px;
+    max-width: 60vw;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+}
+
+.loading-visual.loaded .loading-video {
+    opacity: 1;
+}
+
+.loading-visual.loaded .spinner {
+    opacity: 0;
 }
 
 .loading-text {
@@ -306,9 +307,10 @@ header {
 }
 
 .line-segment {
-    height: 2px;
+    height: 3px;
     background-color: #003A75;
     border-radius: 2px;
+    opacity: 0.6;
 }
 
 .line-segment:nth-child(1) { width: 12%; }
@@ -498,13 +500,7 @@ header {
     stroke: #ff4757;
 }
 
-/* === MODAL WINDOW ===
-   ВАЖНО: раньше тут было display:none / display:flex.
-   Из-за этого, пока модалка скрыта, у .modal-image-container был
-   clientWidth/clientHeight = 0, three.js рендерил в нулевой canvas,
-   и скриншот сцены получался пустым. Теперь модалка всегда "в раскладке"
-   (display:flex), а скрывается через visibility/opacity — размеры
-   контейнера корректны с самого первого кадра. */
+/* === MODAL WINDOW === */
 .result-modal {
     display: flex;
     align-items: center;
@@ -953,7 +949,7 @@ header {
     font-size: 13px;
 }
 
-/* === RESPONSIVE (Tablet & Desktop only) === */
+/* === RESPONSIVE === */
 @media (max-width: 1200px) {
     .modal-body {
         grid-template-columns: 1fr;
@@ -1079,8 +1075,6 @@ header {
         padding: 20px;
     }
 
-    /* Декоративный блоб 840px шириной не скейлится и на узких экранах
-       либо вылезает за пределы секции, либо перекрывает контент */
     .blob-explore {
         display: none;
     }
@@ -1215,8 +1209,6 @@ header {
     white-space: pre-wrap;
 }
 
-
-/* Добавь в конец файла style.css */
 .auth-close {
     position: absolute;
     top: 20px;

@@ -11,14 +11,12 @@
 
 </head>
 <body>
-<!-- Liquid Background -->
 <div class="liquid-bg">
     <div class="liquid-shape liquid-1"></div>
     <div class="liquid-shape liquid-2"></div>
     <div class="liquid-shape liquid-3"></div>
 </div>
 
-<!-- Header -->
 <header>
     <div class="header-lines">
         <div class="header-line"></div>
@@ -31,9 +29,8 @@
     </div>
 </header>
 
-<!-- Main Container -->
+
 <div class="container">
-    <!-- Hero Section -->
     <section class="hero">
         <img src="img/nookifyMorphText.png" alt="Nookify" class="hero-logo">
         <p class="tagline" data-i18n="tagline">AI Interior Generator<br>Bring Your Dreams to Life in Seconds</p>
@@ -48,14 +45,18 @@
         </div>
     </section>
 
-    <!-- Loading -->
+
     <div class="loading" id="loading">
-        <div class="spinner"></div>
+        <div class="loading-visual">
+            <div class="spinner" id="loadingSpinner"></div>
+            <video class="loading-video" id="loadingVideo" autoplay loop muted playsinline>
+                <source src="img/loading.webm" type="video/webm">
+            </video>
+        </div>
         <p class="loading-text" data-i18n="loadingText">Creating your dream interior...</p>
     </div>
 </div>
 
-<!-- Full-width divider with logo -->
 <div class="full-width-divider">
     <img src="img/Logo.png" alt="Nookify Logo" class="explore-logo">
     <div class="full-width-lines">
@@ -66,7 +67,6 @@
     </div>
 </div>
 
-<!-- Explore Section Container -->
 <div class="container">
     <section class="explore-section" id="exploreSection">
         <img src="img/Morph3.png" alt="" class="blob-explore">
@@ -182,7 +182,7 @@
     </section>
 </div>
 
-<!-- === MODAL WINDOW === -->
+
 <div class="result-modal" id="resultModal">
     <div class="modal-content">
         <div class="modal-body">
@@ -229,7 +229,7 @@
                     </div>
                 </div>
 
-                <!-- Material -->
+
                 <div class="export-section">
                     <label class="export-label">Material</label>
 
@@ -246,14 +246,13 @@
                     </div>
                 </div>
 
-                <!-- Download Button -->
                 <button class="btn-download" onclick="downloadDesign()">Download</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- === AUTH MODAL === -->
+
 <div class="auth-modal" id="authModal">
     <div class="auth-content">
         <h2 class="auth-title" data-i18n="loginTitle">Welcome Back</h2>
@@ -274,7 +273,7 @@
     </div>
 </div>
 
-<!-- === FOOTER === -->
+
 <footer class="site-footer">
     <div class="footer-content">
         <div class="footer-logo">

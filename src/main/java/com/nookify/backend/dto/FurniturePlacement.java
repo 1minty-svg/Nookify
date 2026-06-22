@@ -18,4 +18,7 @@ public class FurniturePlacement {
     private double y;
     private double z;
     private double rotation;
+
+    @JsonProperty("scaleWidth")
+    private double scaleWidth = 1.0;
 }

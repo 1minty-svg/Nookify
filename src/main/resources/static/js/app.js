@@ -1,4 +1,3 @@
-
 const CONFIG = {
     modelsBaseUrl: 'http://localhost:8080/api/models',
     generateUrl: 'http://localhost:8080/api/furniture/plan',
@@ -138,8 +137,12 @@ class SceneBuilder {
 
         try {
             const loader = new THREE.GLTFLoader();
+            // Cache-busting: после перезалива модели в MinIO браузер может отдавать
+            // старую (пустую) версию из кэша. В деве проще всегда тянуть свежее.
+            // В проде замени Date.now() на стабильную версию ассетов.
+            const fetchUrl = modelUrl + (modelUrl.includes('?') ? '&' : '?') + 'cb=' + Date.now();
             const gltf = await new Promise((resolve, reject) => {
-                loader.load(modelUrl, resolve, undefined, reject);
+                loader.load(fetchUrl, resolve, undefined, reject);
             });
 
             const model = gltf.scene;
@@ -153,12 +156,36 @@ class SceneBuilder {
             const rot = item.rotation ?? item.rotY ?? item.rot_y ?? 0;
             model.rotation.y = THREE.MathUtils.degToRad(rot);
 
+            // scaleWidth сжимает стену вдоль её ДЛИНЫ. Длина у модели всегда лежит
+            // вдоль ЛОКАЛЬНОГО X (поворот уводит её в мировой X или мировой Z).
+            // model.scale применяется в локальном пространстве ДО поворота, поэтому
+            // масштабировать нужно всегда X — никогда Z.
+            const scaleWidth = item.scaleWidth ?? item.scale_width ?? 1.0;
+            model.scale.x = scaleWidth;
+
+            // ДИАГНОСТИКА: модель скачалась (200), но рендерится ли в ней что-нибудь?
+            // Пустой scene у GLTFLoader НЕ кидает ошибку — модель «грузится», но в сцене ничего нет.
+            let meshCount = 0;
             model.traverse(child => {
                 if (child.isMesh) {
+                    meshCount++;
                     child.castShadow = true;
                     child.receiveShadow = true;
                 }
             });
+
+            if (meshCount === 0) {
+                console.warn(`⚠️ GLB без мешей (пустая модель): ${modelUrl} @ (${px.toFixed(2)}, ${pz.toFixed(2)})`);
+                // Ставим яркий маркер, чтобы «невидимая дыра» стала видимой
+                const markerGeo = new THREE.BoxGeometry(0.25, 2.8, 0.25);
+                const markerMat = new THREE.MeshStandardMaterial({ color: 0xff00ff, emissive: 0x660066 });
+                const marker = new THREE.Mesh(markerGeo, markerMat);
+                marker.position.set(px, 1.4, pz);
+                marker.rotation.y = THREE.MathUtils.degToRad(rot);
+                marker.userData = { modelId: 'EMPTY_GLB_MARKER', modelName: modelUrl, modelUrl };
+                this.scene.add(marker);
+                return marker;
+            }
 
             model.userData = {
                 modelId: item.model_id || item.id || 'minio_model',
@@ -473,6 +500,7 @@ class NookifyApp {
             const response = await fetch(url, { method: 'POST' });
             if (!response.ok) throw new Error(`Ошибка HTTP ${response.status}`);
             const data = await response.json();
+            console.log('[RAW BACKEND RESPONSE] first 3 items:', JSON.stringify(data.slice(0, 3), null, 2));
             const sceneItems = Array.isArray(data) ? data : (data.items || data.models || []);
 
             if (this.viewer) {

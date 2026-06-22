@@ -6,99 +6,675 @@
 
     <changeSet id="fill-furniture-models" author="minty">
         <insert tableName="furniture_models">
-            <column name="name" value="Furniture_Bed_01"/>
-            <column name="model_path" value="Furniture_Bed_01.glb"/>
-            <column name="width" value="1.78"/>
-            <column name="height" value="0.6"/>
-            <column name="depth" value="2.09"/>
+            <column name="name" value="Furniture_Aircon_01"/>
+            <column name="model_path" value="Furniture_Aircon_01.glb"/>
+            <column name="width" value="1.0"/>
+            <column name="height" value="0.27"/>
+            <column name="depth" value="0.35"/>
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Furniture_Wardrobe_01"/>
-            <column name="model_path" value="Furniture_Wardrobe_01.glb"/>
-            <column name="width" value="2.08"/>
-            <column name="height" value="2.2"/>
+            <column name="name" value="Furniture_Camera_Tripod_01"/>
+            <column name="model_path" value="Furniture_Camera_Tripod_01.glb"/>
+            <column name="width" value="0.53"/>
+            <column name="height" value="1.5"/>
+            <column name="depth" value="0.63"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Gaming_Chair_01_Black_Red"/>
+            <column name="model_path" value="Furniture_Gaming_Chair_01_Black_Red.glb"/>
+            <column name="width" value="0.73"/>
+            <column name="height" value="1.09"/>
             <column name="depth" value="0.73"/>
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Furniture_Wardrobe_02"/>
-            <column name="model_path" value="Furniture_Wardrobe_02.glb"/>
-            <column name="width" value="1.05"/>
-            <column name="height" value="2.2"/>
+            <column name="name" value="Furniture_Ergonomic_Office_Chair_01_Grey"/>
+            <column name="model_path" value="Furniture_Ergonomic_Office_Chair_01_Grey.glb"/>
+            <column name="width" value="0.68"/>
+            <column name="height" value="1.08"/>
+            <column name="depth" value="0.7"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Chesterfield_Office_Chair_01"/>
+            <column name="model_path" value="Furniture_Chesterfield_Office_Chair_01.glb"/>
+            <column name="width" value="0.72"/>
+            <column name="height" value="1.16"/>
             <column name="depth" value="0.73"/>
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Furniture_Dining_Chair_01"/>
-            <column name="model_path" value="Furniture_Dining_Chair_01.glb"/>
-            <column name="width" value="0.43"/>
-            <column name="height" value="0.86"/>
+            <column name="name" value="Furniture_Conference_Chair_01"/>
+            <column name="model_path" value="Furniture_Conference_Chair_01.glb"/>
+            <column name="width" value="0.53"/>
+            <column name="height" value="0.83"/>
+            <column name="depth" value="0.58"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Bar_Stool_01"/>
+            <column name="model_path" value="Furniture_Bar_Stool_01.glb"/>
+            <column name="width" value="0.48"/>
+            <column name="height" value="0.73"/>
+            <column name="depth" value="0.46"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Bean_Bag_01_Purple"/>
+            <column name="model_path" value="Furniture_Bean_Bag_01_Purple.glb"/>
+            <column name="width" value="1.13"/>
+            <column name="height" value="0.78"/>
+            <column name="depth" value="1.14"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Coat_Rack_01_Wooden"/>
+            <column name="model_path" value="Furniture_Coat_Rack_01_Wooden.glb"/>
+            <column name="width" value="0.74"/>
+            <column name="height" value="2.02"/>
+            <column name="depth" value="0.74"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Coffee_Table_01_Wooden"/>
+            <column name="model_path" value="Furniture_Coffee_Table_01_Wooden.glb"/>
+            <column name="width" value="0.97"/>
+            <column name="height" value="0.51"/>
+            <column name="depth" value="0.69"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Computer_Setup_01"/>
+            <column name="model_path" value="Furniture_Computer_Setup_01.glb"/>
+            <column name="width" value="0.92"/>
+            <column name="height" value="0.64"/>
             <column name="depth" value="0.56"/>
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Kitchen_Fridge_01"/>
-            <column name="model_path" value="Kitchen_Fridge_01.glb"/>
-            <column name="width" value="0.63"/>
-            <column name="height" value="1.85"/>
-            <column name="depth" value="0.65"/>
+            <column name="name" value="Furniture_Wall_CorkBoard_01"/>
+            <column name="model_path" value="Furniture_Wall_CorkBoard_01.glb"/>
+            <column name="width" value="2.04"/>
+            <column name="height" value="1.82"/>
+            <column name="depth" value="0.17"/>
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Kitchen_Base_Unit_01"/>
-            <column name="model_path" value="Kitchen_Base_Unit_01.glb"/>
+            <column name="name" value="Furniture_Armchair_02_Brown"/>
+            <column name="model_path" value="Furniture_Armchair_02_Brown.glb"/>
+            <column name="width" value="1.16"/>
+            <column name="height" value="1.0"/>
+            <column name="depth" value="0.9"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Couch_01_Leather"/>
+            <column name="model_path" value="Furniture_Couch_01_Leather.glb"/>
+            <column name="width" value="1.94"/>
+            <column name="height" value="0.94"/>
+            <column name="depth" value="0.92"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Couch_02_Red"/>
+            <column name="model_path" value="Furniture_Couch_02_Red.glb"/>
+            <column name="width" value="2.3"/>
+            <column name="height" value="0.95"/>
+            <column name="depth" value="0.81"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Couch_Modern_01_Brown"/>
+            <column name="model_path" value="Furniture_Couch_Modern_01_Brown.glb"/>
+            <column name="width" value="1.83"/>
+            <column name="height" value="0.91"/>
+            <column name="depth" value="0.93"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Armchair_03_Brown"/>
+            <column name="model_path" value="Furniture_Armchair_03_Brown.glb"/>
+            <column name="width" value="0.95"/>
+            <column name="height" value="1.21"/>
+            <column name="depth" value="0.93"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Armchair_04_Brown"/>
+            <column name="model_path" value="Furniture_Armchair_04_Brown.glb"/>
+            <column name="width" value="1.1"/>
+            <column name="height" value="0.98"/>
+            <column name="depth" value="0.83"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Corner_Desk_01_Wooden"/>
+            <column name="model_path" value="Furniture_Corner_Desk_01_Wooden.glb"/>
+            <column name="width" value="1.96"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="1.96"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Chesterfield_Desk_01"/>
+            <column name="model_path" value="Furniture_Chesterfield_Desk_01.glb"/>
+            <column name="width" value="2.18"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="0.95"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Office_Desk_01_Black"/>
+            <column name="model_path" value="Furniture_Office_Desk_01_Black.glb"/>
+            <column name="width" value="2.06"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="0.89"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Office_Desk_Corner_01_Black"/>
+            <column name="model_path" value="Furniture_Office_Desk_Corner_01_Black.glb"/>
+            <column name="width" value="2.08"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="2.74"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Adjustable_Desk_01"/>
+            <column name="model_path" value="Furniture_Adjustable_Desk_01.glb"/>
+            <column name="width" value="1.6"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="0.83"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Desk_Lamp_01"/>
+            <column name="model_path" value="Furniture_Desk_Lamp_01.glb"/>
+            <column name="width" value="0.18"/>
+            <column name="height" value="0.38"/>
+            <column name="depth" value="0.27"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Desk_Lamp_02"/>
+            <column name="model_path" value="Furniture_Desk_Lamp_02.glb"/>
+            <column name="width" value="0.25"/>
+            <column name="height" value="0.7"/>
+            <column name="depth" value="0.7"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Table_Lamp_01_Beige"/>
+            <column name="model_path" value="Furniture_Table_Lamp_01_Beige.glb"/>
+            <column name="width" value="0.21"/>
+            <column name="height" value="0.49"/>
+            <column name="depth" value="0.25"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Table_Lamp_02_Burgundy"/>
+            <column name="model_path" value="Furniture_Table_Lamp_02_Burgundy.glb"/>
+            <column name="width" value="0.17"/>
+            <column name="height" value="0.49"/>
+            <column name="depth" value="0.2"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Pedestal_Fan_01"/>
+            <column name="model_path" value="Furniture_Pedestal_Fan_01.glb"/>
+            <column name="width" value="0.69"/>
+            <column name="height" value="1.51"/>
+            <column name="depth" value="0.69"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Fridge_02"/>
+            <column name="model_path" value="Kitchen_Fridge_02.glb"/>
+            <column name="width" value="1.25"/>
+            <column name="height" value="1.96"/>
+            <column name="depth" value="0.73"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Fridge_03"/>
+            <column name="model_path" value="Kitchen_Fridge_03.glb"/>
+            <column name="width" value="0.93"/>
+            <column name="height" value="2.15"/>
+            <column name="depth" value="0.85"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Wall_Unit_Classic_01"/>
+            <column name="model_path" value="Kitchen_Wall_Unit_Classic_01.glb"/>
+            <column name="width" value="1.0"/>
+            <column name="height" value="0.8"/>
+            <column name="depth" value="0.45"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Base_Unit_Classic_01"/>
+            <column name="model_path" value="Kitchen_Base_Unit_Classic_01.glb"/>
+            <column name="width" value="1.0"/>
+            <column name="height" value="0.8"/>
+            <column name="depth" value="0.6"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Base_Unit_Classic_Sink_01"/>
+            <column name="model_path" value="Kitchen_Base_Unit_Classic_Sink_01.glb"/>
+            <column name="width" value="1.0"/>
+            <column name="height" value="1.31"/>
+            <column name="depth" value="0.6"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Plant_01"/>
+            <column name="model_path" value="Furniture_Plant_01.glb"/>
+            <column name="width" value="0.68"/>
+            <column name="height" value="1.01"/>
+            <column name="depth" value="0.74"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Plant_02"/>
+            <column name="model_path" value="Furniture_Plant_02.glb"/>
+            <column name="width" value="0.5"/>
+            <column name="height" value="1.05"/>
+            <column name="depth" value="0.43"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Plant_03"/>
+            <column name="model_path" value="Furniture_Plant_03.glb"/>
+            <column name="width" value="0.75"/>
+            <column name="height" value="1.16"/>
+            <column name="depth" value="0.58"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Plant_04"/>
+            <column name="model_path" value="Furniture_Plant_04.glb"/>
+            <column name="width" value="1.13"/>
+            <column name="height" value="1.08"/>
+            <column name="depth" value="0.59"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Plant_05"/>
+            <column name="model_path" value="Furniture_Plant_05.glb"/>
+            <column name="width" value="1.52"/>
+            <column name="height" value="1.33"/>
+            <column name="depth" value="1.63"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Plant_06"/>
+            <column name="model_path" value="Furniture_Plant_06.glb"/>
+            <column name="width" value="2.43"/>
+            <column name="height" value="1.51"/>
+            <column name="depth" value="1.43"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Plant_08"/>
+            <column name="model_path" value="Furniture_Plant_08.glb"/>
+            <column name="width" value="1.81"/>
+            <column name="height" value="1.73"/>
+            <column name="depth" value="1.8"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Plant_09"/>
+            <column name="model_path" value="Furniture_Plant_09.glb"/>
+            <column name="width" value="1.38"/>
+            <column name="height" value="1.4"/>
+            <column name="depth" value="1.43"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Plant_10"/>
+            <column name="model_path" value="Furniture_Plant_10.glb"/>
+            <column name="width" value="1.58"/>
+            <column name="height" value="2.5"/>
+            <column name="depth" value="1.64"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Cabinet_Open_01_Wooden"/>
+            <column name="model_path" value="Furniture_Cabinet_Open_01_Wooden.glb"/>
+            <column name="width" value="1.18"/>
+            <column name="height" value="1.81"/>
+            <column name="depth" value="0.48"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Rack_Open_01_Light"/>
+            <column name="model_path" value="Furniture_Rack_Open_01_Light.glb"/>
+            <column name="width" value="1.21"/>
+            <column name="height" value="1.93"/>
+            <column name="depth" value="0.51"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Rack_Open_02"/>
+            <column name="model_path" value="Furniture_Rack_Open_02.glb"/>
+            <column name="width" value="1.1"/>
+            <column name="height" value="1.6"/>
+            <column name="depth" value="0.66"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Cabinet_Mixed_01_Wooden"/>
+            <column name="model_path" value="Furniture_Cabinet_Mixed_01_Wooden.glb"/>
+            <column name="width" value="1.36"/>
+            <column name="height" value="1.52"/>
+            <column name="depth" value="0.45"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Cabinet_Open_02_Wooden"/>
+            <column name="model_path" value="Furniture_Cabinet_Open_02_Wooden.glb"/>
+            <column name="width" value="1.4"/>
+            <column name="height" value="0.89"/>
+            <column name="depth" value="0.38"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Modern_Cabinet_Open_Modern_03_Black"/>
+            <column name="model_path" value="Furniture_Modern_Cabinet_Open_Modern_03_Black.glb"/>
+            <column name="width" value="3.07"/>
+            <column name="height" value="1.67"/>
+            <column name="depth" value="0.48"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Shelf_Wall_01_Wooden"/>
+            <column name="model_path" value="Furniture_Shelf_Wall_01_Wooden.glb"/>
+            <column name="width" value="1.46"/>
+            <column name="height" value="0.53"/>
+            <column name="depth" value="0.39"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Modern_Shelf_Wall_Modern_01_White"/>
+            <column name="model_path" value="Furniture_Modern_Shelf_Wall_Modern_01_White.glb"/>
+            <column name="width" value="2.23"/>
+            <column name="height" value="0.96"/>
+            <column name="depth" value="0.47"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Shelf_Wall_02"/>
+            <column name="model_path" value="Furniture_Shelf_Wall_02.glb"/>
+            <column name="width" value="1.6"/>
+            <column name="height" value="1.05"/>
+            <column name="depth" value="0.52"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Table_Simple_01_Grey"/>
+            <column name="model_path" value="Furniture_Table_Simple_01_Grey.glb"/>
+            <column name="width" value="2.1"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="1.3"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Table_Simple_02_Wooden"/>
+            <column name="model_path" value="Furniture_Table_Simple_02_Wooden.glb"/>
+            <column name="width" value="1.33"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="1.27"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Table_Modern_01_Black_White"/>
+            <column name="model_path" value="Furniture_Table_Modern_01_Black_White.glb"/>
+            <column name="width" value="1.87"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="0.88"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Table_Conference_01_Wooden"/>
+            <column name="model_path" value="Furniture_Table_Conference_01_Wooden.glb"/>
+            <column name="width" value="4.06"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="2.22"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Table_Conference_02_Wooden"/>
+            <column name="model_path" value="Furniture_Table_Conference_02_Wooden.glb"/>
+            <column name="width" value="4.04"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="1.38"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Table_Conference_Shelf_01_Wooden"/>
+            <column name="model_path" value="Furniture_Table_Conference_Shelf_01_Wooden.glb"/>
+            <column name="width" value="4.06"/>
+            <column name="height" value="0.91"/>
+            <column name="depth" value="1.86"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Table_Round_01_Wooden"/>
+            <column name="model_path" value="Furniture_Table_Round_01_Wooden.glb"/>
+            <column name="width" value="1.17"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="1.18"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Table_Round_02_White_Red"/>
+            <column name="model_path" value="Furniture_Table_Round_02_White_Red.glb"/>
+            <column name="width" value="1.3"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="1.3"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Bathroom_Toilet_02"/>
+            <column name="model_path" value="Bathroom_Toilet_02.glb"/>
+            <column name="width" value="0.44"/>
+            <column name="height" value="1.15"/>
+            <column name="depth" value="0.72"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_TV_Wall_01"/>
+            <column name="model_path" value="Furniture_TV_Wall_01.glb"/>
+            <column name="width" value="1.55"/>
+            <column name="height" value="1.02"/>
+            <column name="depth" value="0.24"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Wall_StickyNotes_01"/>
+            <column name="model_path" value="Furniture_Wall_StickyNotes_01.glb"/>
+            <column name="width" value="2.27"/>
+            <column name="height" value="0.81"/>
+            <column name="depth" value="0.08"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Wall_StickyNotes_02"/>
+            <column name="model_path" value="Furniture_Wall_StickyNotes_02.glb"/>
             <column name="width" value="0.9"/>
+            <column name="height" value="0.76"/>
+            <column name="depth" value="0.06"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Wall_Corkboard_02"/>
+            <column name="model_path" value="Furniture_Wall_Corkboard_02.glb"/>
+            <column name="width" value="1.86"/>
+            <column name="height" value="0.99"/>
+            <column name="depth" value="0.13"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Wall_Corkboard_03"/>
+            <column name="model_path" value="Furniture_Wall_Corkboard_03.glb"/>
+            <column name="width" value="1.73"/>
+            <column name="height" value="0.95"/>
+            <column name="depth" value="0.12"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Xmas_Tree_01"/>
+            <column name="model_path" value="Furniture_Xmas_Tree_01.glb"/>
+            <column name="width" value="1.25"/>
+            <column name="height" value="2.27"/>
+            <column name="depth" value="1.29"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Fishtank_01_Wooden"/>
+            <column name="model_path" value="Furniture_Fishtank_01_Wooden.glb"/>
+            <column name="width" value="1.29"/>
+            <column name="height" value="1.34"/>
+            <column name="depth" value="0.67"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Plant_07"/>
+            <column name="model_path" value="Furniture_Plant_07.glb"/>
+            <column name="width" value="0.46"/>
+            <column name="height" value="0.53"/>
+            <column name="depth" value="0.51"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Plant_Flowers_01"/>
+            <column name="model_path" value="Furniture_Plant_Flowers_01.glb"/>
+            <column name="width" value="0.23"/>
+            <column name="height" value="0.71"/>
+            <column name="depth" value="0.24"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Plant_Flowers_02"/>
+            <column name="model_path" value="Furniture_Plant_Flowers_02.glb"/>
+            <column name="width" value="0.28"/>
+            <column name="height" value="0.92"/>
+            <column name="depth" value="0.24"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Base_Unit_Classic_02"/>
+            <column name="model_path" value="Kitchen_Base_Unit_Classic_02.glb"/>
+            <column name="width" value="0.5"/>
             <column name="height" value="0.8"/>
             <column name="depth" value="0.6"/>
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Kitchen_Base_Unit_02"/>
-            <column name="model_path" value="Kitchen_Base_Unit_02.glb"/>
-            <column name="width" value="0.9"/>
+            <column name="name" value="Kitchen_Base_Unit_Classic_Stove_01"/>
+            <column name="model_path" value="Kitchen_Base_Unit_Classic_Stove_01.glb"/>
+            <column name="width" value="0.5"/>
+            <column name="height" value="0.81"/>
+            <column name="depth" value="0.6"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Base_Unit_Classic_Corner_01"/>
+            <column name="model_path" value="Kitchen_Base_Unit_Classic_Corner_01.glb"/>
+            <column name="width" value="0.56"/>
             <column name="height" value="0.8"/>
+            <column name="depth" value="0.56"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Armchair_Modern_01_White"/>
+            <column name="model_path" value="Furniture_Armchair_Modern_01_White.glb"/>
+            <column name="width" value="1.02"/>
+            <column name="height" value="1.12"/>
+            <column name="depth" value="1.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Kids_Bed_01_Beige_Wooden"/>
+            <column name="model_path" value="Furniture_Kids_Bed_01_Beige_Wooden.glb"/>
+            <column name="width" value="1.29"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="2.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Kids_Horse_Beige"/>
+            <column name="model_path" value="Furniture_Kids_Horse_Beige.glb"/>
+            <column name="width" value="0.3"/>
+            <column name="height" value="0.6"/>
+            <column name="depth" value="0.83"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Floor_Lamp_01_Beige"/>
+            <column name="model_path" value="Furniture_Floor_Lamp_01_Beige.glb"/>
+            <column name="width" value="0.59"/>
+            <column name="height" value="1.92"/>
+            <column name="depth" value="0.59"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Wall_Mirror_01"/>
+            <column name="model_path" value="Furniture_Wall_Mirror_01.glb"/>
+            <column name="width" value="0.82"/>
+            <column name="height" value="1.91"/>
+            <column name="depth" value="0.17"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Kids_Stool_01_Beige"/>
+            <column name="model_path" value="Furniture_Kids_Stool_01_Beige.glb"/>
+            <column name="width" value="0.3"/>
+            <column name="height" value="0.3"/>
+            <column name="depth" value="0.3"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Kids_Table_01_Beige"/>
+            <column name="model_path" value="Furniture_Kids_Table_01_Beige.glb"/>
+            <column name="width" value="0.86"/>
+            <column name="height" value="0.49"/>
             <column name="depth" value="0.6"/>
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Kitchen_Base_Unit_Sink_01"/>
-            <column name="model_path" value="Kitchen_Base_Unit_Sink_01.glb"/>
-            <column name="width" value="0.9"/>
-            <column name="height" value="1.03"/>
-            <column name="depth" value="0.6"/>
+            <column name="name" value="Bathroom_Toilet_Modern_01"/>
+            <column name="model_path" value="Bathroom_Toilet_Modern_01.glb"/>
+            <column name="width" value="0.51"/>
+            <column name="height" value="1.14"/>
+            <column name="depth" value="0.64"/>
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Kitchen_Wall_Unit_01"/>
-            <column name="model_path" value="Kitchen_Wall_Unit_01.glb"/>
-            <column name="width" value="1.5"/>
-            <column name="height" value="0.8"/>
-            <column name="depth" value="0.44"/>
+            <column name="name" value="Furniture_Trashcan_Modern_01_Metallic"/>
+            <column name="model_path" value="Furniture_Trashcan_Modern_01_Metallic.glb"/>
+            <column name="width" value="0.18"/>
+            <column name="height" value="0.39"/>
+            <column name="depth" value="0.21"/>
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Kitchen_Base_Unit_03"/>
-            <column name="model_path" value="Kitchen_Base_Unit_03.glb"/>
-            <column name="width" value="0.45"/>
-            <column name="height" value="0.8"/>
-            <column name="depth" value="0.6"/>
+            <column name="name" value="Furniture_Clothes_Dryer_01"/>
+            <column name="model_path" value="Furniture_Clothes_Dryer_01.glb"/>
+            <column name="width" value="2.04"/>
+            <column name="height" value="0.74"/>
+            <column name="depth" value="0.68"/>
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Kitchen_Base_Unit_Stove_Oven_01"/>
-            <column name="model_path" value="Kitchen_Base_Unit_Stove_Oven_01.glb"/>
-            <column name="width" value="0.45"/>
-            <column name="height" value="1.17"/>
-            <column name="depth" value="0.6"/>
-        </insert>
-
-        <insert tableName="furniture_models">
-            <column name="name" value="Kitchen_Base_Unit_Corner_01"/>
-            <column name="model_path" value="Kitchen_Base_Unit_Corner_01.glb"/>
-            <column name="width" value="0.6"/>
-            <column name="height" value="0.8"/>
-            <column name="depth" value="0.6"/>
+            <column name="name" value="Furniture_WashingMachine_01"/>
+            <column name="model_path" value="Furniture_WashingMachine_01.glb"/>
+            <column name="width" value="0.56"/>
+            <column name="height" value="0.79"/>
+            <column name="depth" value="0.45"/>
         </insert>
 
         <insert tableName="furniture_models">
@@ -118,30 +694,6 @@
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Structure_Floor_White_01"/>
-            <column name="model_path" value="Structure_Floor_White_01.glb"/>
-            <column name="width" value="3.0"/>
-            <column name="height" value="0.0"/>
-            <column name="depth" value="3.0"/>
-        </insert>
-
-        <insert tableName="furniture_models">
-            <column name="name" value="Furniture_Couch_01"/>
-            <column name="model_path" value="Furniture_Couch_01.glb"/>
-            <column name="width" value="1.94"/>
-            <column name="height" value="0.94"/>
-            <column name="depth" value="0.92"/>
-        </insert>
-
-        <insert tableName="furniture_models">
-            <column name="name" value="Furniture_Dining_Table_01"/>
-            <column name="model_path" value="Furniture_Dining_Table_01.glb"/>
-            <column name="width" value="2.15"/>
-            <column name="height" value="0.75"/>
-            <column name="depth" value="1.43"/>
-        </insert>
-
-        <insert tableName="furniture_models">
             <column name="name" value="Bathroom_Toilet_01"/>
             <column name="model_path" value="Bathroom_Toilet_01.glb"/>
             <column name="width" value="0.37"/>
@@ -150,9 +702,153 @@
         </insert>
 
         <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Double_Bed_01_Beige"/>
+            <column name="model_path" value="Furniture_Double_Bed_01_Beige.glb"/>
+            <column name="width" value="1.78"/>
+            <column name="height" value="0.6"/>
+            <column name="depth" value="2.09"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Bed_02_Beige"/>
+            <column name="model_path" value="Furniture_Bed_02_Beige.glb"/>
+            <column name="width" value="1.04"/>
+            <column name="height" value="0.6"/>
+            <column name="depth" value="2.09"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Couch_01_Light"/>
+            <column name="model_path" value="Furniture_Couch_01_Light.glb"/>
+            <column name="width" value="1.94"/>
+            <column name="height" value="0.94"/>
+            <column name="depth" value="0.92"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Dining_Chair_Modern_01_Wooden"/>
+            <column name="model_path" value="Furniture_Dining_Chair_Modern_01_Wooden.glb"/>
+            <column name="width" value="0.43"/>
+            <column name="height" value="0.86"/>
+            <column name="depth" value="0.56"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Dining_Table_Modern_01_Wooden"/>
+            <column name="model_path" value="Furniture_Dining_Table_Modern_01_Wooden.glb"/>
+            <column name="width" value="2.15"/>
+            <column name="height" value="0.75"/>
+            <column name="depth" value="1.43"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Wardrobe_Modern_01_Wooden"/>
+            <column name="model_path" value="Furniture_Wardrobe_Modern_01_Wooden.glb"/>
+            <column name="width" value="2.08"/>
+            <column name="height" value="2.2"/>
+            <column name="depth" value="0.73"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Wardrobe_02"/>
+            <column name="model_path" value="Furniture_Wardrobe_02.glb"/>
+            <column name="width" value="1.05"/>
+            <column name="height" value="2.2"/>
+            <column name="depth" value="0.73"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Base_Unit_Modern_01"/>
+            <column name="model_path" value="Kitchen_Base_Unit_Modern_01.glb"/>
+            <column name="width" value="0.9"/>
+            <column name="height" value="0.8"/>
+            <column name="depth" value="0.6"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Base_Unit_Modern_02"/>
+            <column name="model_path" value="Kitchen_Base_Unit_Modern_02.glb"/>
+            <column name="width" value="0.9"/>
+            <column name="height" value="0.8"/>
+            <column name="depth" value="0.6"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Base_Unit_Modern_03"/>
+            <column name="model_path" value="Kitchen_Base_Unit_Modern_03.glb"/>
+            <column name="width" value="0.45"/>
+            <column name="height" value="0.8"/>
+            <column name="depth" value="0.6"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Base_Unit_Modern_Corner_01"/>
+            <column name="model_path" value="Kitchen_Base_Unit_Modern_Corner_01.glb"/>
+            <column name="width" value="0.6"/>
+            <column name="height" value="0.8"/>
+            <column name="depth" value="0.6"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Base_Unit_Modern_Sink_01"/>
+            <column name="model_path" value="Kitchen_Base_Unit_Modern_Sink_01.glb"/>
+            <column name="width" value="0.9"/>
+            <column name="height" value="1.03"/>
+            <column name="depth" value="0.6"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Base_Unit_Modern_Stove_Oven_01"/>
+            <column name="model_path" value="Kitchen_Base_Unit_Modern_Stove_Oven_01.glb"/>
+            <column name="width" value="0.45"/>
+            <column name="height" value="1.17"/>
+            <column name="depth" value="0.6"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Fridge_01"/>
+            <column name="model_path" value="Kitchen_Fridge_01.glb"/>
+            <column name="width" value="0.63"/>
+            <column name="height" value="1.85"/>
+            <column name="depth" value="0.65"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Wall_Unit_Modern_01"/>
+            <column name="model_path" value="Kitchen_Wall_Unit_Modern_01.glb"/>
+            <column name="width" value="1.5"/>
+            <column name="height" value="0.8"/>
+            <column name="depth" value="0.44"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Structure_Floor_Brown_01"/>
+            <column name="model_path" value="Structure_Floor_Brown_01.glb"/>
+            <column name="width" value="2.0"/>
+            <column name="height" value="0.0"/>
+            <column name="depth" value="2.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Structure_Floor_White_01"/>
+            <column name="model_path" value="Structure_Floor_White_01.glb"/>
+            <column name="width" value="2.0"/>
+            <column name="height" value="0.0"/>
+            <column name="depth" value="2.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Structure_Wall_Ext_Corner_01"/>
+            <column name="model_path" value="Structure_Wall_Ext_Corner_01.glb"/>
+            <column name="width" value="0.5"/>
+            <column name="height" value="3.0"/>
+            <column name="depth" value="0.5"/>
+        </insert>
+
+        <insert tableName="furniture_models">
             <column name="name" value="Structure_Wall_Ext_Door_01"/>
             <column name="model_path" value="Structure_Wall_Ext_Door_01.glb"/>
-            <column name="width" value="3.0"/>
+            <column name="width" value="2.0"/>
             <column name="height" value="3.0"/>
             <column name="depth" value="0.61"/>
         </insert>
@@ -160,7 +856,23 @@
         <insert tableName="furniture_models">
             <column name="name" value="Structure_Wall_Ext_Simple_01"/>
             <column name="model_path" value="Structure_Wall_Ext_Simple_01.glb"/>
-            <column name="width" value="3.0"/>
+            <column name="width" value="2.0"/>
+            <column name="height" value="3.0"/>
+            <column name="depth" value="0.5"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Structure_Wall_Ext_Simple_02"/>
+            <column name="model_path" value="Structure_Wall_Ext_Simple_02.glb"/>
+            <column name="width" value="1.0"/>
+            <column name="height" value="3.0"/>
+            <column name="depth" value="0.5"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Structure_Wall_Ext_Simple_03"/>
+            <column name="model_path" value="Structure_Wall_Ext_Simple_03.glb"/>
+            <column name="width" value="0.5"/>
             <column name="height" value="3.0"/>
             <column name="depth" value="0.5"/>
         </insert>
@@ -174,27 +886,219 @@
         </insert>
 
         <insert tableName="furniture_models">
+            <column name="name" value="Structure_Wall_Ext_Window_02"/>
+            <column name="model_path" value="Structure_Wall_Ext_Window_02.glb"/>
+            <column name="width" value="2.0"/>
+            <column name="height" value="3.0"/>
+            <column name="depth" value="0.68"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Structure_Wall_Int_Arch_01"/>
+            <column name="model_path" value="Structure_Wall_Int_Arch_01.glb"/>
+            <column name="width" value="2.0"/>
+            <column name="height" value="3.0"/>
+            <column name="depth" value="0.14"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Structure_Wall_Int_Corner_01"/>
+            <column name="model_path" value="Structure_Wall_Int_Corner_01.glb"/>
+            <column name="width" value="0.14"/>
+            <column name="height" value="3.0"/>
+            <column name="depth" value="0.14"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Structure_Wall_Int_Door_01"/>
+            <column name="model_path" value="Structure_Wall_Int_Door_01.glb"/>
+            <column name="width" value="2.0"/>
+            <column name="height" value="3.0"/>
+            <column name="depth" value="0.27"/>
+        </insert>
+
+        <insert tableName="furniture_models">
             <column name="name" value="Structure_Wall_Int_Simple_01"/>
             <column name="model_path" value="Structure_Wall_Int_Simple_01.glb"/>
-            <column name="width" value="3.0"/>
+            <column name="width" value="2.0"/>
             <column name="height" value="3.0"/>
-            <column name="depth" value="0.5"/>
+            <column name="depth" value="0.14"/>
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Structure_Wall_Ext_Corner_01"/>
-            <column name="model_path" value="Structure_Wall_Ext_Corner_01.glb"/>
+            <column name="name" value="Structure_Wall_Int_Simple_02"/>
+            <column name="model_path" value="Structure_Wall_Int_Simple_02.glb"/>
+            <column name="width" value="1.0"/>
+            <column name="height" value="3.0"/>
+            <column name="depth" value="0.14"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Structure_Wall_Int_Simple_03"/>
+            <column name="model_path" value="Structure_Wall_Int_Simple_03.glb"/>
             <column name="width" value="0.5"/>
-            <column name="height" value="3.0"/>
-            <column name="depth" value="0.5"/>
+            <column name="height" value="2.95"/>
+            <column name="depth" value="0.14"/>
         </insert>
 
         <insert tableName="furniture_models">
-            <column name="name" value="Structure_Floor_Brown_01"/>
-            <column name="model_path" value="Structure_Floor_Brown_01.glb"/>
-            <column name="width" value="3.0"/>
+            <column name="name" value="Structure_Floor_Grey_01"/>
+            <column name="model_path" value="Structure_Floor_Grey_01.glb"/>
+            <column name="width" value="2.0"/>
             <column name="height" value="0.0"/>
+            <column name="depth" value="2.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Carpet_01"/>
+            <column name="model_path" value="Furniture_Carpet_01.glb"/>
+            <column name="width" value="2.0"/>
+            <column name="height" value="0.03"/>
+            <column name="depth" value="1.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Carpet_02"/>
+            <column name="model_path" value="Furniture_Carpet_02.glb"/>
+            <column name="width" value="3.0"/>
+            <column name="height" value="0.03"/>
             <column name="depth" value="3.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Armchair_Modern_01_Blue"/>
+            <column name="model_path" value="Furniture_Armchair_Modern_01_Blue.glb"/>
+            <column name="width" value="1.02"/>
+            <column name="height" value="1.12"/>
+            <column name="depth" value="1.0"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Armchair_04_White"/>
+            <column name="model_path" value="Furniture_Armchair_04_White.glb"/>
+            <column name="width" value="1.1"/>
+            <column name="height" value="0.98"/>
+            <column name="depth" value="0.83"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Bean_Bag_01_Orange"/>
+            <column name="model_path" value="Furniture_Bean_Bag_01_Orange.glb"/>
+            <column name="width" value="1.13"/>
+            <column name="height" value="0.78"/>
+            <column name="depth" value="1.14"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Cabinet_Open_01_White"/>
+            <column name="model_path" value="Furniture_Cabinet_Open_01_White.glb"/>
+            <column name="width" value="1.18"/>
+            <column name="height" value="1.81"/>
+            <column name="depth" value="0.48"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Coat_Rack_01_Black"/>
+            <column name="model_path" value="Furniture_Coat_Rack_01_Black.glb"/>
+            <column name="width" value="0.74"/>
+            <column name="height" value="2.02"/>
+            <column name="depth" value="0.74"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Couch_Modern_01_Blue"/>
+            <column name="model_path" value="Furniture_Couch_Modern_01_Blue.glb"/>
+            <column name="width" value="1.83"/>
+            <column name="height" value="0.91"/>
+            <column name="depth" value="0.93"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Fishtank_01_White"/>
+            <column name="model_path" value="Furniture_Fishtank_01_White.glb"/>
+            <column name="width" value="1.29"/>
+            <column name="height" value="1.34"/>
+            <column name="depth" value="0.67"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Floor_Lamp_01_Blue"/>
+            <column name="model_path" value="Furniture_Floor_Lamp_01_Blue.glb"/>
+            <column name="width" value="0.59"/>
+            <column name="height" value="1.92"/>
+            <column name="depth" value="0.59"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Gaming_Chair_01_White_Blue"/>
+            <column name="model_path" value="Furniture_Gaming_Chair_01_White_Blue.glb"/>
+            <column name="width" value="0.73"/>
+            <column name="height" value="1.09"/>
+            <column name="depth" value="0.73"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Kids_Horse_Bright"/>
+            <column name="model_path" value="Furniture_Kids_Horse_Bright.glb"/>
+            <column name="width" value="0.3"/>
+            <column name="height" value="0.6"/>
+            <column name="depth" value="0.83"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Kids_Stool_01_Bright"/>
+            <column name="model_path" value="Furniture_Kids_Stool_01_Bright.glb"/>
+            <column name="width" value="0.3"/>
+            <column name="height" value="0.3"/>
+            <column name="depth" value="0.3"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Kids_Table_01_Bright"/>
+            <column name="model_path" value="Furniture_Kids_Table_01_Bright.glb"/>
+            <column name="width" value="0.86"/>
+            <column name="height" value="0.49"/>
+            <column name="depth" value="0.6"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Modern_Cabinet_Open_Modern_03_White"/>
+            <column name="model_path" value="Furniture_Modern_Cabinet_Open_Modern_03_White.glb"/>
+            <column name="width" value="3.07"/>
+            <column name="height" value="1.67"/>
+            <column name="depth" value="0.48"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Trashcan_Modern_01_Black"/>
+            <column name="model_path" value="Furniture_Trashcan_Modern_01_Black.glb"/>
+            <column name="width" value="0.18"/>
+            <column name="height" value="0.39"/>
+            <column name="depth" value="0.21"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Wall_Mirror_02"/>
+            <column name="model_path" value="Furniture_Wall_Mirror_02.glb"/>
+            <column name="width" value="1.06"/>
+            <column name="height" value="0.52"/>
+            <column name="depth" value="0.11"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Furniture_Wardrobe_Modern_01_White"/>
+            <column name="model_path" value="Furniture_Wardrobe_Modern_01_White.glb"/>
+            <column name="width" value="2.08"/>
+            <column name="height" value="2.2"/>
+            <column name="depth" value="0.73"/>
+        </insert>
+
+        <insert tableName="furniture_models">
+            <column name="name" value="Kitchen_Wall_Unit_Modern_02"/>
+            <column name="model_path" value="Kitchen_Wall_Unit_Modern_02.glb"/>
+            <column name="width" value="0.56"/>
+            <column name="height" value="0.8"/>
+            <column name="depth" value="0.44"/>
         </insert>
     </changeSet>
 </databaseChangeLog>
